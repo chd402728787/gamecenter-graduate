@@ -19,6 +19,7 @@ module.exports = {
     'semi': 0,
     "vue/no-unused-components":"off",
     "vue/require-v-for-key":"off",
-    "vue/no-unused-vars":"off"
+    "vue/no-unused-vars":"off",
+    "lintOnSave": false
   }
 }
