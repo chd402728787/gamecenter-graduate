@@ -5,8 +5,8 @@ module.exports = {
   },
   extends: [
     'plugin:vue/vue3-essential',
-    '@vue/standard',
-    '@vue/typescript/recommended'
+    //'@vue/standard',
+    //'@vue/typescript/recommended'
   ],
   parserOptions: {
     ecmaVersion: 2020
@@ -16,10 +16,11 @@ module.exports = {
     'no-multiple-empty-lines': 0,
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'semi': 0,
     "vue/no-unused-components":"off",
     "vue/require-v-for-key":"off",
     "vue/no-unused-vars":"off",
-    "lintOnSave": false
+    "indent": ['off', 2],
+    'semi': 0,
+    "space-before-function-paren": 0
   }
 }

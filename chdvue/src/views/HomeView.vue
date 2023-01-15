@@ -1,16 +1,15 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <LeftTitle msg="Welcome to Your Vue.js + TypeScript App"/>
+    <GameList></GameList>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import LeftTitle from '@/components/LeftTitle.vue';
+import GameList from '@/components/GameList.vue';
 @Options({
   components: {
-    LeftTitle
+    GameList
   }
 })
 export default class HomeView extends Vue {}

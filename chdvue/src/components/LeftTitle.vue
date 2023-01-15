@@ -6,21 +6,22 @@
           active-text-color="#ffd04b"
           text-color="#2C3E50"
           class="leftMenu"
+          :router="true"
         >
-          <img src="../assets/logo.png" alt="" style="height: 200px;"/>
-          <el-menu-item index="1">
+          <img src="../assets/images/logo.png" alt="" style="height: 200px;"/>
+          <el-menu-item index="/">
             <el-icon><House /></el-icon>
             <span>主页</span>
           </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="/about">
             <el-icon><Trophy /></el-icon>
             <span>排行榜</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="/find">
             <el-icon><Paperclip /></el-icon>
             <span>发现</span>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="/forum">
             <el-icon><ChatLineRound /></el-icon>
             <span>论坛</span>
           </el-menu-item>
@@ -30,20 +31,14 @@
 
 </template>
 
-  <script lang="ts" setup>
+<script lang="ts" setup>
   import {
     House,
     Trophy,
     Paperclip,
     ChatLineRound
   } from '@element-plus/icons-vue'
-  const handleOpen = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
-  }
-  const handleClose = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
-  }
-  </script>
+</script>
 
 <script lang="ts">
 export default {
@@ -52,7 +47,5 @@ export default {
 </script>
 
 <style scoped>
-.leftMenu{
 
-}
 </style>
