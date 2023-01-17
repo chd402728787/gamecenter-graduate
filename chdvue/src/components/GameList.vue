@@ -1,9 +1,11 @@
 <template>
   <el-row v-for="(item,index) in info" :key="index">
-    <el-card >
-      <img class="card-img" :src="item.img" />
-      <p><span>{{item.gname}}</span></p>
-    </el-card>
+    <router-link to="/game">
+      <el-card >
+        <img class="card-img" :src="item.img" />
+        <p><span>{{item.gname}}</span></p>
+      </el-card>
+    </router-link>
   </el-row>
 </template>
 <script setup lang="ts">

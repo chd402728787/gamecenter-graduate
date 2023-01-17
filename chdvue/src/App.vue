@@ -22,7 +22,7 @@
       <!--常驻列表-->
       <el-container>
         <el-aside class="aside-Right" width="300px">
-          热搜
+          <RightAside></RightAside>
         </el-aside>
       </el-container>
     </el-container>
@@ -35,7 +35,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import GameList from './components/GameList.vue'
 import SearchVue from './components/SearchVue.vue'
 import testVue from './components/test.vue'
-
+import RightAside from './components/RightAside.vue'
 export default {
   name: 'App',
   components: {
@@ -43,7 +43,8 @@ export default {
     HelloWorld,
     GameList,
     SearchVue,
-    testVue
+    testVue,
+    RightAside
   },
   mounted () {
     this.axios.get('api/game').then((res) => {

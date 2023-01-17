@@ -8,7 +8,7 @@
           class="leftMenu"
           :router="true"
         >
-          <img src="../assets/images/logo.png" alt="" style="height: 200px;"/>
+          <el-image :src="require('../assets/images/logo.png')" style="height: 200px;"/>
           <el-menu-item index="/">
             <el-icon><House /></el-icon>
             <span>主页</span>
