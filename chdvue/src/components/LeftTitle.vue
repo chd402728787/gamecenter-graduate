@@ -2,7 +2,7 @@
     <el-row>
       <el-col>
         <el-menu
-          background-color="#ebebe9"
+          background-color="#f5f7f8"
           active-text-color="#ffd04b"
           text-color="#2C3E50"
           class="leftMenu"

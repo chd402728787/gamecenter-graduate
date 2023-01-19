@@ -1,6 +1,6 @@
 <template>
   <el-row v-for="(item,index) in info" :key="index">
-    <router-link to="/game">
+    <router-link :to="{path:'/game/',query:{id:item.id}}">
       <el-card >
         <img class="card-img" :src="item.img" />
         <p><span>{{item.gname}}</span></p>
@@ -8,10 +8,7 @@
     </router-link>
   </el-row>
 </template>
-<script setup lang="ts">
-
-</script>
-<script>
+<script lang="ts">
 import axios from 'axios';
 export default {
   data () {
@@ -26,7 +23,6 @@ export default {
     axios.get('http://127.0.0.1/game/all').then(res => {
           //console.log(res.data);
           this.info = res.data
-          console.log(this.info);
       }).catch(err => {
           console.log("获取数据失败" + err);
       })
@@ -41,6 +37,13 @@ export default {
   padding: 5px;
 }
 .card-img{
-  width: 550px;
+  width: 500px;
+}
+.router-link-active {
+   text-decoration: none;
+}
+
+a {
+  text-decoration: none;
 }
 </style>

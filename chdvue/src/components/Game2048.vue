@@ -229,7 +229,10 @@ function useTouchSlide(selector, safeOffset = 20) {
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 export default {
-  name: 'game'
+  name: 'game2048',
+  mounted() {
+
+  }
 }
 </script>
 

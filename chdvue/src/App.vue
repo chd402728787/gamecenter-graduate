@@ -21,7 +21,7 @@
 
       <!--常驻列表-->
       <el-container>
-        <el-aside class="aside-Right" width="300px">
+        <el-aside class="aside-Right" width="200px">
           <RightAside></RightAside>
         </el-aside>
       </el-container>
@@ -47,9 +47,6 @@ export default {
     RightAside
   },
   mounted () {
-    this.axios.get('api/game').then((res) => {
-      console.log(res.data[0]);
-    })
     //window.addEventListener("scroll", this.showSearch);
     /*showSearch((res)=>{
       let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -71,7 +68,7 @@ export default {
   text-align: center;
 }
 .mainBox{
-  background-color: #ebebe9;
+  background-color: #f5f7f8;
   height: 100%;
   width: 100%;
 }
