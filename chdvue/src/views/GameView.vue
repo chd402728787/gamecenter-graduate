@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div class="gameView">
     <Game2048 v-if="g2048"></Game2048>
     <GameSnake v-if="snake"></GameSnake>
+
   </div>
 </template>
+
 <script>
 import Game2048 from '../components/Game2048.vue'
 import GameSnake from '../components/GameSnake.vue'
@@ -12,7 +14,8 @@ export default {
     return {
       gameid: '',
       g2048: false,
-      snake: false
+      snake: false,
+      rock: false
     }
   },
   name: 'GameView',
@@ -25,6 +28,9 @@ export default {
         break;
       case '2':
         this.snake = true;
+        break;
+      case '3':
+        this.rock = true;
         break;
       default:
         break;

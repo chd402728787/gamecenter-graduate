@@ -7,10 +7,7 @@
       </el-aside>
 
       <el-container>
-        <!--搜索框-->
-        <el-header class="header-up">
-          <SearchVue></SearchVue>
-        </el-header>
+
         <!--主要内容-->
         <el-main class="main-part">
           <div class="div-card">
@@ -46,6 +43,7 @@ export default {
     testVue,
     RightAside
   },
+
   mounted () {
     //window.addEventListener("scroll", this.showSearch);
     /*showSearch((res)=>{
@@ -77,13 +75,13 @@ export default {
   padding: 0;
 }
 .el-aside::-webkit-scrollbar {
-     display: none;
+  display: none;
 }
 .aside-Left{
-  height: calc(100vh - 70px);
+  height: calc(120vh - 70px);
 }
 .main-part{
-  height: calc(100vh - 70px);
+  height: calc(120vh - 70px);
 }
 .div-card{
   width: 800px;

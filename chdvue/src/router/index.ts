@@ -4,6 +4,7 @@ import AboutView from '../views/AboutView.vue'
 import FindView from '../views/FindView.vue'
 import ForumView from '../views/ForumView.vue'
 import GameView from '../views/GameView.vue'
+import GameDetailsView from '../views/GameDetailsView.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -29,6 +30,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/game',
     name: 'game',
     component: GameView
+  },
+  {
+    path: '/gamedetails',
+    name: 'gamedetails',
+    component: GameDetailsView
   }
 ]
 

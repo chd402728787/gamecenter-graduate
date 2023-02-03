@@ -6,12 +6,17 @@
 
 <script lang="ts" setup>
 import { Search } from '@element-plus/icons-vue';
-import { ref } from 'vue'
+import { ref,getCurrentInstance } from 'vue'
 const input = ref('')
 </script>
 
 <script lang="ts">
   export default {
-    name: 'SearchVue'
+    name: 'SearchVue',
+    data(){
+    return{
+      mainPage:true
+    }
+   },
   }
 </script>
