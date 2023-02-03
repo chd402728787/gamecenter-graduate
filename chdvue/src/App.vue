@@ -18,7 +18,7 @@
 
       <!--常驻列表-->
       <el-container>
-        <el-aside class="aside-Right" width="200px">
+        <el-aside class="aside-Right" width="300px">
           <RightAside></RightAside>
         </el-aside>
       </el-container>
@@ -80,7 +80,11 @@ export default {
 .aside-Left{
   height: calc(120vh - 70px);
 }
+.aside-Right{
+  height: calc(120vh - 70px);
+}
 .main-part{
+  background-color: white;
   height: calc(120vh - 70px);
 }
 .div-card{

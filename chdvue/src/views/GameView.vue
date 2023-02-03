@@ -15,7 +15,6 @@ export default {
       gameid: '',
       g2048: false,
       snake: false,
-      rock: false
     }
   },
   name: 'GameView',
@@ -28,9 +27,6 @@ export default {
         break;
       case '2':
         this.snake = true;
-        break;
-      case '3':
-        this.rock = true;
         break;
       default:
         break;

@@ -1,7 +1,7 @@
 <template>
   <el-row v-for="(item,index) in info" :key="index">
     <router-link :to="{path:'/gamedetails/',query:{id:item.id}}">
-      <el-card >
+      <el-card class="gamelist-card">
         <img class="card-img" :src="item.img" />
         <p><span>{{item.gname}}</span></p>
       </el-card>
@@ -35,7 +35,7 @@ export default {
   width: 600px;
 }
 .el-row{
-  padding: 5px;
+  padding-bottom: 20px;
 }
 .card-img{
   width: 500px;
@@ -47,4 +47,9 @@ export default {
 a {
   text-decoration: none;
 }
+.el-card, .el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover{
+  background-color: #f5f7f8;
+  box-shadow: none;
+}
+
 </style>

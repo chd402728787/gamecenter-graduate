@@ -40,8 +40,8 @@ exports.del = (req, res) => {        //通过id删除数据
 }
 
 exports.add = (req, res) => {        //向info表添加数据
-    var sql = 'insert into game (id,gname,img,gamelink) values (?,?,?,?)'
-    db.query(sql, [req.query.id, req.query.gname, req.query.img, req.query.gamelink], (err, data) => {
+    var sql = 'insert into game (id,gname,img,gamelink,introduction) values (?,?,?,?)'
+    db.query(sql, [req.query.id, req.query.gname, req.query.img, req.query.gamelink, req.query.introduction], (err, data) => {
         if(err) {
             return res.send('错误：' + err.message)
         }
@@ -60,8 +60,8 @@ exports.add = (req, res) => {        //向info表添加数据
 }
 
 exports.update = (req, res) => {        //通过id更新数据
-    var sql = 'update game set gname = ?, img = ?, gamelink = ? where id = ?'
-    db.query(sql, [req.query.gname, req.query.img, req.query.id, req.query.gamelink], (err, data) => {
+    var sql = 'update game set gname = ?, img = ?, gamelink = ?,introduction = ? where id = ?'
+    db.query(sql, [req.query.gname, req.query.img, req.query.id, req.query.gamelink,introduction], (err, data) => {
         if(err) {
             return res.send('错误：' + err.message)
         }
