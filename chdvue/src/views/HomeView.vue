@@ -10,7 +10,7 @@ import GameList from '@/components/GameList.vue';
 @Options({
   components: {
     GameList
-  }
+  },
 })
 export default class HomeView extends Vue {}
 </script>
