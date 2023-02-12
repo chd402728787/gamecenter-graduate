@@ -17,6 +17,8 @@
       "webpack-env"
     ],
     "paths": {
+      "vuex": ["node_modules/vuex/types/index.d.ts"],
+      "vue-router": ["node_modules/........"],
       "@/*": [
         "src/*"
       ]

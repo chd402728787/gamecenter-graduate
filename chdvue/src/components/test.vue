@@ -1,7 +1,7 @@
 <template>
   <div id="box">
     <div class="left">
-      <el-button type="primary" @click="all">获取game表的全部数据</el-button>
+      <el-button type="primary" @click="all">获取evaluate表的全部数据</el-button>
       <h2>-----------------------------------</h2>
       <el-input v-model="id" placeholder="请输入id" class="input"></el-input>
       <el-button type="danger" @click="del">删除</el-button>
@@ -9,28 +9,28 @@
       <h2>-----------------------------------</h2>
       <el-input v-model="id" placeholder="请输入id" class="input"></el-input>
       <el-input v-model="gname" placeholder="请输入游戏名" class="input"></el-input>
-      <el-input v-model="img" placeholder="请输入图片" class="input"></el-input>
+      <el-input v-model="evaluation" placeholder="请输入图片" class="input"></el-input>
       <el-button type="primary" @click="add">添加</el-button>
       <el-button type="primary" @click="update">修改</el-button>
     </div>
     <div class="right">
       <table class="hovertable">
         <tr>
-          <th>ID</th><th>游戏名</th><th>图片</th>
+          <th>ID</th><th>游戏名</th><th>评价</th>
         </tr>
         <tr v-for="(item, index) in info"  v-bind:key="index">
           <td>{{item.id}}</td>
           <td>{{item.gname}}</td>
-          <td><img :src="item.img" fit="fit" /></td>
+          <td>{{item.evaluation}}</td>
         </tr>
       </table>
       <el-table :data="info" >
       <el-table-column prop="id" width="180" />
       <el-table-column prop="gname" width="180" />
-      <el-table-column  prop="img" width="180" >
+      <el-table-column  prop="evaluation" width="180" >
         <template v-slot="scope">
           <span class="title-img">
-            <img :src="scope.row.img" alt="" class="table-img">
+            <img :src="scope.row.evaluation" alt="" class="table-img">
           </span>
         </template>
       </el-table-column>
@@ -46,13 +46,13 @@ export default {
     return {
       id: '',
       gname: '',
-      img: '',
+      evaluation: '',
       info: []
     };
   },
   methods: {
-    all () { //查找game表全部数据
-      axios.get('http://127.0.0.1/game/all').then(res => {
+    all () { //查找evaluate表全部数据
+      axios.get('http://127.0.0.1/evaluate/all').then(res => {
           console.log(res.data);
           this.info = res.data
       }).catch(err => {
@@ -60,7 +60,7 @@ export default {
       })
     },
     del () { //删除操作
-      axios.get('http://127.0.0.1/game/del',{
+      axios.get('http://127.0.0.1/evaluate/del',{
         params: {
           id: this.id
         }
@@ -79,7 +79,7 @@ export default {
       })
     },
     get () { //查询操作
-      axios.get('http://127.0.0.1/game/get',{
+      axios.get('http://127.0.0.1/evaluate/get',{
         params: {
           id: this.id
         }
@@ -91,11 +91,11 @@ export default {
       })
     },
     add() { //添加操作
-      axios.get('http://127.0.0.1/game/add',{
+      axios.get('http://localhost/evaluate/add',{
         params: {
           id: this.id,
-          name: this.gname,
-          img: this.img,
+          gname: this.gname,
+          evaluation: this.evaluation,
         }
       }).then(res => {
           //console.log(res.data);
@@ -112,11 +112,11 @@ export default {
       })
     },
     update() { //修改操作
-      axios.get('http://127.0.0.1/game/update',{
+      axios.get('http://localhost/evaluate/update',{
         params: {
           id: this.id,
           gname: this.gname,
-          img: this.img,
+          evaluation: this.evaluation,
         }
       }).then(res => {
           //console.log(res.data);

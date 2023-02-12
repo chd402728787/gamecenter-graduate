@@ -1,7 +1,13 @@
+/*
+ * @Date: 2023-02-11 13:44:46
+ * @LastEditors: aDong
+ * @LastEditTime: 2023-02-12 17:42:30
+ * @FilePath: \gD_Design\chdvue\server\API\evaluate.js
+ */
 let db = require('../db/index.js')
 
-exports.all = (req, res) => {        //获取game表全部数据
-    var sql = 'select * from game'
+exports.all = (req, res) => {        //获取evaluate表全部数据
+    var sql = 'select * from evaluate'
     db.query(sql, (err, data) => {
         if(err) {
             return res.send('错误：' + err.message)
@@ -10,7 +16,7 @@ exports.all = (req, res) => {        //获取game表全部数据
     })
 }
 exports.get = (req, res) => {        //通过id查询数据
-    var sql = 'select * from game where id = ?'    //？用于占位
+    var sql = 'select * from evaluate where id = ?'    //？用于占位
     db.query(sql, [req.query.id], (err, data) => {
         if(err) {
             return res.send('错误：' + err.message)
@@ -20,7 +26,7 @@ exports.get = (req, res) => {        //通过id查询数据
 }
 
 exports.del = (req, res) => {        //通过id删除数据
-    var sql = 'delete from game where id = ?'
+    var sql = 'delete from evaluate where id = ?'
     db.query(sql, [req.query.id], (err, data) => {
         if(err) {
             return res.send('错误：' + err.message)
@@ -39,9 +45,9 @@ exports.del = (req, res) => {        //通过id删除数据
     })
 }
 
-exports.add = (req, res) => {        //向info表添加数据
-    var sql = 'insert into game (id,gname,img,gamelink,introduction) values (?,?,?,?)'
-    db.query(sql, [req.query.id, req.query.gname, req.query.img, req.query.gamelink, req.query.introduction], (err, data) => {
+exports.add = (req, res) => {        //向evaluate表添加数据
+    var sql = 'insert into evaluate (id,gname,evaluation) values (?,?,?)'
+    db.query(sql, [req.query.id, req.query.gname, req.query.evaluation], (err, data) => {
         if(err) {
             return res.send('错误：' + err.message)
         }
@@ -53,27 +59,27 @@ exports.add = (req, res) => {        //向info表添加数据
         }else{
             res.send({
               status: 202,
-              message: 'error'
+              message: '添加失败'
             })
         }
     })
 }
 
 exports.update = (req, res) => {        //通过id更新数据
-    var sql = 'update game set gname = ?, img = ?, gamelink = ?,introduction = ? where id = ?'
-    db.query(sql, [req.query.gname, req.query.img, req.query.gamelink,introduction, req.query.id], (err, data) => {
+    var sql = 'update evaluate set gname = ?, evaluation = ? where id = ?'
+    db.query(sql, [req.query.gname, req.query.evaluation, req.query.id], (err, data) => {
         if(err) {
             return res.send('错误：' + err.message)
         }
         if(data.changedRows > 0) {
           res.send({
             status: 200,
-            message: 'success'
+            message: '修改成功'
           })
         }else{
           res.send({
             status: 202,
-            message: 'error'
+            message: '修改失败'
           })
         }
     })
