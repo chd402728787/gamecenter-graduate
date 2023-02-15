@@ -23,14 +23,6 @@
           </div>
         </el-main>
       </el-container>
-
-      <!--常驻列表-->
-      <el-container>
-        <el-aside class="aside-Right" width="300px">
-          <RightAside></RightAside>
-          <el-backtop :right="100" :bottom="100" />
-        </el-aside>
-      </el-container>
     </el-container>
   </div>
 </template>
@@ -112,10 +104,17 @@ export default {
 }
 
 .div-card {
-  width: 800px;
   display: -webkit-box;
   -webkit-box-pack: center;
   -webkit-box-align: center;
   -webkit-box-orient: vertical;
+}
+::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0;
 }
 </style>
