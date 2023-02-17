@@ -153,8 +153,7 @@ export default {
 
       //把蛇画出来：蛇身体+蛇头
       function drawSnake() {
-        //1.先画蛇身体：你需要把数组snakeParts里的蛇身画出来，蛇身是绿色的，蛇身坐标怎么画可以参考第3步的画蛇头
-
+        //先画蛇身体
         ctx.fillStyle = "green";
         //ctx.fillRect(snakeParts[0].x*tileCount,snakeParts[0].y*tileCount, tileSize, tileSize);
         snakeParts.forEach((item) => {
@@ -166,13 +165,13 @@ export default {
           );
         });
 
-        //2.把吃到的苹果加到蛇的身体上（以下代码不用改动和添加）
+        //把吃到的苹果加到蛇的身体上
         snakeParts.push(new SnakePart(headX, headY)); //把新的蛇方块加到snakeParts数组的最后面
         while (snakeParts.length > tailLength) {
           snakeParts.shift(); // 如果超过了尾巴的长度，那就在snakeParts头去掉一个
         }
 
-        //3.画蛇头（以下代码不用改动和添加）
+        //画蛇头
         ctx.fillStyle = "blue";
         ctx.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize);
       }

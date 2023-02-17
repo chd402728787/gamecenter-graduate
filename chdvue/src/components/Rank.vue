@@ -6,9 +6,7 @@
           <el-tabs v-model="ranktabsvmodel" class="rank-tabs-class" :stretch=true>
             <!--详情-->
             <el-tab-pane label="热门榜" name="first">
-              <el-table :data="info" stripe style="width: 100%;cellpadding:0;">
-                <el-table-column prop="id" width="180" />
-                <el-table-column prop="gname" width="180" />
+              <el-table :data="hotinfo" stripe style="width: 100%;cellpadding:0;">
                 <el-table-column prop="img">
                   <template v-slot="scope">
                     <span>
@@ -18,28 +16,31 @@
                     </span>
                   </template>
                 </el-table-column>
+                <el-table-column prop="gname" width="180" />
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="新品榜" name="third">
-              <el-table :data="info" stripe style="width: 100%;cellpadding:0;">
-                <el-table-column prop="id" width="180" />
-                <el-table-column prop="gname" width="180" />
+              <el-table :data="newinfo" stripe style="width: 100%;cellpadding:0;">
                 <el-table-column prop="img">
                   <template v-slot="scope">
                     <span>
-                      <img :src="scope.row.img" alt="" style="width: 150px;height: 150px">
+                      <router-link :to="{ path: '/gamedetails/', query: { id: scope.row.id } }">
+                        <img :src="scope.row.img" alt="" style="width: 150px;height: 150px">
+                      </router-link>
                     </span>
                   </template>
                 </el-table-column>
+                <el-table-column prop="gname" width="180" />
               </el-table>
             </el-tab-pane>
           </el-tabs>
         </el-col>
       </el-row>
     </div>
-  </div>
+</div>
 </template>
 <script>
+
 import axios from 'axios';
 export default {
   name: 'Rank',
@@ -48,17 +49,32 @@ export default {
       id: '',
       gname: '',
       img: '',
-      info: Array(),
+      hotinfo: Array(),//热门榜
+      newinfo:Array(),//新品榜
       ranktabsvmodel: 'first'
     };
   },
-
-  created() {
-    axios.get('http://127.0.0.1/game/all').then(res => {
-      this.info = res.data
+  methods:{
+    sortDate(a,b){//对新品榜按时间排序
+        var x = a.date.replace(/-/g,"").replace(/:/g,"").replace(".","").replace("T","").replace("Z","");
+        var y = b.date.replace(/-/g,"").replace(/:/g,"").replace(".","").replace("T","").replace("Z","");
+        return y-x;
+    },
+    all(info){
+      axios.get('http://127.0.0.1/game/all').then(res => {
+      if(info==this.hotinfo)
+        this.hotinfo = res.data;
+      else{
+        this.newinfo = res.data.sort(this.sortDate);
+      }
     }).catch(err => {
       console.log("获取数据失败" + err);
     })
+    }
+  },
+  created() {
+    this.all(this.hotinfo);
+    this.all(this.newinfo);
   }
 }
 </script>
@@ -68,7 +84,7 @@ export default {
 }
 
 .rank-img {
-  width: 100px;
+  width: 150px;
 }
 
 .customer-table th,

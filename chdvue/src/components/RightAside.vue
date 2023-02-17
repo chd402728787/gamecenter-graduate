@@ -1,6 +1,14 @@
+<!--
+ * @Date: 2023-01-16 12:50:53
+ * @LastEditors: aDong
+ * @LastEditTime: 2023-02-16 11:47:05
+ * @FilePath: \gD_Design\chdvue\src\components\RightAside.vue
+-->
 <template>
   <div class="block">
-    <el-avatar class="avatar-user" :size="50" :src="circleUrl" />
+    <router-link to="/login">
+    <el-avatar class="avatar-user" :size="50" :src="circleUrl"/>
+    </router-link>
   </div>
 </template>
 <script setup lang="ts">
