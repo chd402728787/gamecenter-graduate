@@ -19,14 +19,14 @@
             </el-col>
           </el-row>
           <div class="div-card">
-            <router-view />
+            <router-view v-if="isRouterAlive" />
           </div>
         </el-main>
       </el-container>
 
       <!--常驻列表-->
       <el-container>
-        <el-aside class="aside-Right" width="300px">
+        <el-aside class="aside-Right" width="200px">
           <RightAside></RightAside>
           <el-backtop :right="100" :bottom="100" />
         </el-aside>
@@ -43,6 +43,16 @@ import RightAside from './components/RightAside.vue'
 import { Back } from '@element-plus/icons-vue'
 export default {
   name: 'App',
+  data(){
+    return{
+      isRouterAlive: true
+    }
+  },
+  provide(){
+    return{
+      reload:this.reload
+    }
+  },
   components: {
     LeftTitle,
     GameList,
@@ -51,6 +61,12 @@ export default {
     Back
   },
   methods: {
+    reload(){
+      this.isRouterAlive = false
+      this.$nextTick(function() {
+        this.isRouterAlive = true
+      })
+    },
     returnPage() {
       if (window.history.length <= 1) {
         this.$router.push({ path: "/" });
@@ -112,7 +128,7 @@ export default {
 }
 
 .div-card {
-  width: 800px;
+  width: 900px;
   display: -webkit-box;
   -webkit-box-pack: center;
   -webkit-box-align: center;

@@ -17,8 +17,12 @@
       "webpack-env"
     ],
     "paths": {
-      "vuex": ["node_modules/vuex/types/index.d.ts"],
-      "vue-router": ["node_modules/........"],
+      "vuex": [
+        "node_modules/vuex/types/index.d.ts"
+      ],
+      "vue-router": [
+        "node_modules/........"
+      ],
       "@/*": [
         "src/*"
       ]
@@ -38,6 +42,7 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/assets/*"
   ]
 }
