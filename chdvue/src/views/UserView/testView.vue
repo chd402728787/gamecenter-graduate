@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Vue } from 'vue-class-component';
-import test from '../components/test.vue'
+import test from '@/components/test.vue'
 export default{
   components:{
     test

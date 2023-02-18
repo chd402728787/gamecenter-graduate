@@ -10,7 +10,7 @@
                 <el-table-column prop="img">
                   <template v-slot="scope">
                     <span>
-                      <router-link :to="{ path: '/gamedetails/', query: { id: scope.row.id } }">
+                      <router-link :to="{ path: '/user/gamedetails/', query: { id: scope.row.id } }">
                         <img :src="scope.row.img" alt="" style="width: 150px;height: 150px">
                       </router-link>
                     </span>
@@ -24,7 +24,7 @@
                 <el-table-column prop="img">
                   <template v-slot="scope">
                     <span>
-                      <router-link :to="{ path: '/gamedetails/', query: { id: scope.row.id } }">
+                      <router-link :to="{ path: '/user/gamedetails/', query: { id: scope.row.id } }">
                         <img :src="scope.row.img" alt="" style="width: 150px;height: 150px">
                       </router-link>
                     </span>

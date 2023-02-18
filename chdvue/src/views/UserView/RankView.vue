@@ -10,7 +10,7 @@
 </div>
 </template>
 <script>
-import Rank from '../components/Rank.vue'
+import Rank from '@/components/User/Rank.vue'
 export default{
   components:{
     Rank

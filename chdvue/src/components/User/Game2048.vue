@@ -237,5 +237,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../assets/scss/game2048.scss';
+@import '@/assets/scss/game2048.scss';
 </style>

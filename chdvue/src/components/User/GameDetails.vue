@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-02-02 10:05:45
  * @LastEditors: aDong
- * @LastEditTime: 2023-02-17 18:56:32
+ * @LastEditTime: 2023-02-17 20:36:46
  * @FilePath: \gD_Design\chdvue\src\components\GameDetails.vue
 -->
 <template>
@@ -10,7 +10,7 @@
     <!--开始按钮-->
     <el-row>
       <el-col>
-        <router-link ref="linkto" :to="{ path: '/game/', query: { id: gameid } }">
+        <router-link ref="linkto" :to="{ path: '/user/game/', query: { id: gameid } }">
           <el-button class="gamestart-button" ref="gamestart">开始游戏</el-button>
         </router-link>
       </el-col>
@@ -82,6 +82,7 @@
 
 <script>
 
+
 import axios from 'axios';
 import { ref } from 'vue';
 import { Star } from '@element-plus/icons-vue';
@@ -105,7 +106,7 @@ export default {
       evaluation: '',
       evaluationArray: Array(),
       //占位
-      spaceposition:"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+      spaceposition: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
     };
   },
   setup() {
@@ -188,12 +189,13 @@ export default {
   font-size: x-small;
   opacity: 70%;
 }
-.el-tabs__item{
+
+.el-tabs__item {
   width: 100px;
 }
 
 .el-carousel__item h3 {
-  color: #475669;
+  color: white;
   opacity: 0.75;
   line-height: 200px;
   margin: 0;
@@ -208,7 +210,7 @@ export default {
   background-color: #708090;
 }
 
-p{
+p {
   word-break: break-all;
   word-wrap: break-word;
 }

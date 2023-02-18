@@ -1,47 +1,51 @@
 /*
  * @Date: 2023-01-07 10:18:09
  * @LastEditors: aDong
- * @LastEditTime: 2023-02-15 16:18:29
+ * @LastEditTime: 2023-02-18 09:25:49
  * @FilePath: \gD_Design\chdvue\src\router\index.ts
  */
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import RankView from '../views/RankView.vue'
-import FindView from '../views/FindView.vue'
-import ForumView from '../views/ForumView.vue'
-import GameView from '../views/GameView.vue'
-import GameDetailsView from '../views/GameDetailsView.vue'
-import LoginView from '../views/LoginView.vue'
-import RegisterView from '../views/RegisterView.vue'
-import testView from '../views/testView.vue'
+import HomeView from '@/views/UserView/HomeView.vue'
+import RankView from '@/views/UserView/RankView.vue'
+import FindView from '@/views/UserView/FindView.vue'
+import ForumView from '@/views/UserView/ForumView.vue'
+import GameView from '@/views/UserView/GameView.vue'
+import GameDetailsView from '@/views/UserView/GameDetailsView.vue'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
+import testView from '@/views/UserView/testView.vue'
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: "/",
+    redirect: "/user/home",
+  },
+  {
+    path: '/user/home',
     name: 'home',
     component: HomeView
   },
   {
-    path: '/rank',
+    path: '/user/rank',
     name: 'rank',
     component: RankView
   },
   {
-    path: '/find',
+    path: '/user/find',
     name: 'find',
     component: FindView
   },
   {
-    path: '/forum',
+    path: '/user/forum',
     name: 'forum',
     component: ForumView
   },
   {
-    path: '/game',
+    path: '/user/game',
     name: 'game',
     component: GameView
   },
   {
-    path: '/gamedetails',
+    path: '/user/gamedetails',
     name: 'gamedetails',
     component: GameDetailsView
   },

@@ -4,7 +4,7 @@
     </div>
 </template>
 <script lang="ts">
-    import GameDetails from '../components/GameDetails.vue'
+    import GameDetails from '@/components/User/GameDetails.vue'
     export default {
       components: {
         GameDetails

@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import store from '../store'
 export default {
   name: "game",
   mounted() {
@@ -78,7 +77,7 @@ export default {
       //-----------------------------------------
 
       ///////------------游戏的核心函数：运行游戏-----------/////
-      store.state.countSnake++; //记录游戏次数
+      //store.state.countSnake++; 记录游戏次数
       function drawGame() {
 
         xVelocity = inputsXVelocity;
@@ -93,9 +92,9 @@ export default {
         let result = isGameOver();
         if (result) {
           alert("游戏结束了");
-          store.state.scoreSnake += score;//记录总分
+          /*store.state.scoreSnake += score;//记录总分
           if (score > store.state.scoreMaxSnake)//记录最高分
-            store.state.scoreMaxSnake = score;
+            store.state.scoreMaxSnake = score;*/
           return;
         }
 

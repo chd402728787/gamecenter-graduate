@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import Game2048 from '../components/Game2048.vue'
-import GameSnake from '../components/GameSnake.vue'
-import GoBang from '../components/GoBang.vue'
+import Game2048 from '@/components/User/Game2048.vue'
+import GameSnake from '@/components/User/GameSnake.vue'
+import GoBang from '@/components/User/GoBang.vue'
 export default {
   data() {
     return {

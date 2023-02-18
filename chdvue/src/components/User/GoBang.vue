@@ -20,7 +20,7 @@
       <canvas id="goBangCanvas" ref="gbcanvas" :width="screenWidth" :height="screenHeight"></canvas>
     </div>
     <!--播放音乐-->
-    <audio id="bgmusic" src="../assets/music/gobang/麦振鸿 - 混天棋盘.mp3" autoplay="true" loop="true" controls=stopbutton
+    <audio id="bgmusic" src="@/assets/music/gobang/麦振鸿 - 混天棋盘.mp3" autoplay="true" loop="true" controls=stopbutton
       style="display:none;"></audio>
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
         [1, -1] //右斜线
       ],
       flag: false,
-      img: ["../assets/images/gobang/黑.png", "../assets/images/白.png"],
+      img: ["@/assets/images/gobang/黑.png", "@/assets/images/白.png"],
       screenWidth: document.documentElement.clientWidth / 1.5, //屏幕宽度
       screenHeight: document.documentElement.clientWidth / 1.5, //屏幕高度
       history: [], //历史记录位置
@@ -197,7 +197,7 @@ export default {
         let x = Math.floor(e.offsetX / lineWidth);
         let y = Math.floor(e.offsetY / lineWidth);
         //添加落子音效
-        const clickSound = new Audio("../assets/music/gobang落子.wav");
+        const clickSound = new Audio("@/assets/music/gobang落子.wav");
         //console.log('this.chessMapArr 数组', this.chessMapArr)
         if (this.chessMapArr[x][y] == 0) {
           //落子位置和颜色
@@ -300,7 +300,7 @@ export default {
         // 游戏结束
         // console.log('游戏结束')
         this.gameOverText();
-        let gameOverMusic = new Audio("../assets/music/gobang/游戏胜利音效.mp3");
+        let gameOverMusic = new Audio("@/assets/music/gobang/游戏胜利音效.mp3");
         gameOverMusic.play();
         this.flag = true;
       }

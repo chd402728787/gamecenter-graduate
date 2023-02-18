@@ -1,3 +1,9 @@
+<!--
+ * @Date: 2023-01-07 10:18:08
+ * @LastEditors: aDong
+ * @LastEditTime: 2023-02-18 09:28:33
+ * @FilePath: \gD_Design\chdvue\src\App.vue
+-->
 <template>
   <div class="mainBox">
     <el-container>
@@ -36,10 +42,10 @@
 </template>
 
 <script>
-import LeftTitle from './components/LeftTitle.vue'
-import GameList from './components/GameList.vue'
-import SearchVue from './components/SearchVue.vue'
-import RightAside from './components/RightAside.vue'
+import LeftTitle from '@/components/LeftTitle.vue'
+import GameList from '@/components/User/GameList.vue'
+import SearchVue from '@/components/SearchVue.vue'
+import RightAside from '@/components/RightAside.vue'
 import { Back } from '@element-plus/icons-vue'
 export default {
   name: 'App',

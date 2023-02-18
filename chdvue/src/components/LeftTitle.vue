@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-01-07 10:22:46
  * @LastEditors: aDong
- * @LastEditTime: 2023-02-15 20:29:15
+ * @LastEditTime: 2023-02-18 09:26:14
  * @FilePath: \gD_Design\chdvue\src\components\LeftTitle.vue
 -->
 <template>
@@ -17,25 +17,25 @@
           <el-image :src="require('../assets/images/logo.png')" style="height: 200px;" />
         </router-link>
 
-        <el-menu-item index="/">
+        <el-menu-item index="/user/home">
           <el-icon>
             <House />
           </el-icon>
           <span>主页</span>
         </el-menu-item>
-        <el-menu-item index="/rank">
+        <el-menu-item index="/user/rank">
           <el-icon>
             <Trophy />
           </el-icon>
           <span>排行榜</span>
         </el-menu-item>
-        <el-menu-item index="/find">
+        <el-menu-item index="/user/find">
           <el-icon>
             <Paperclip />
           </el-icon>
           <span>发现</span>
         </el-menu-item>
-        <el-menu-item index="/forum">
+        <el-menu-item index="/user/forum">
           <el-icon>
             <ChatLineRound />
           </el-icon>

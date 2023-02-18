@@ -1,6 +1,6 @@
 <template>
   <el-row v-for="(item,index) in info" :key="index">
-    <router-link :to="{path:'/gamedetails/',query:{id:item.id}}">
+    <router-link :to="{path:'/user/gamedetails/',query:{id:item.id}}">
       <el-card class="gamelist-card">
         <img class="card-img" :src="item.img" />
         <p><span>{{item.gname}}</span></p>
