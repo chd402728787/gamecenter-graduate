@@ -1,8 +1,8 @@
 <!--
  * @Date: 2023-01-07 10:22:46
  * @LastEditors: aDong
- * @LastEditTime: 2023-02-18 09:26:14
- * @FilePath: \gD_Design\chdvue\src\components\LeftTitle.vue
+ * @LastEditTime: 2023-02-19 20:46:57
+ * @FilePath: \gD_Design\chdvue\src\components\Admin\LeftTitle.vue
 -->
 <template>
   <el-row>
@@ -14,32 +14,32 @@
         class="leftMenu"
         :router="true">
         <router-link to="/">
-          <el-image :src="require('../assets/images/logo.png')" style="height: 200px;" />
+          <el-image :src="require('@/assets/images/logo.png')" style="height: 200px;" />
         </router-link>
 
-        <el-menu-item index="/user/home">
+        <el-menu-item index="/admin/usermanage">
           <el-icon>
             <House />
           </el-icon>
-          <span>主页</span>
+          <span>用户管理</span>
         </el-menu-item>
-        <el-menu-item index="/user/rank">
+        <el-menu-item index="/admin/gamemanage">
           <el-icon>
             <Trophy />
           </el-icon>
-          <span>排行榜</span>
+          <span>游戏管理</span>
         </el-menu-item>
         <el-menu-item index="/user/find">
           <el-icon>
             <Paperclip />
           </el-icon>
-          <span>发现</span>
+          <span>用户意见</span>
         </el-menu-item>
         <el-menu-item index="/user/forum">
           <el-icon>
             <ChatLineRound />
           </el-icon>
-          <span>论坛</span>
+          <span>攻略管理</span>
         </el-menu-item>
       </el-menu>
     </el-col>

@@ -1,52 +1,18 @@
 <!--
  * @Date: 2023-01-07 10:18:08
  * @LastEditors: aDong
- * @LastEditTime: 2023-02-18 09:28:33
+ * @LastEditTime: 2023-02-18 09:52:02
  * @FilePath: \gD_Design\chdvue\src\App.vue
 -->
 <template>
-  <div class="mainBox">
-    <el-container>
-      <!--左边标签栏-->
-      <el-aside class="aside-Left" width="300px">
-        <LeftTitle></LeftTitle>
-      </el-aside>
-
-      <el-container>
-        <!--主要内容-->
-        <el-main class="main-part">
-          <el-row>
-            <el-col :span="2">
-              <el-button @click="returnPage" size="small" round>
-                <el-icon>
-                  <Back />
-                </el-icon>
-              </el-button>
-            </el-col>
-          </el-row>
-          <div class="div-card">
-            <router-view v-if="isRouterAlive" />
-          </div>
-        </el-main>
-      </el-container>
-
-      <!--常驻列表-->
-      <el-container>
-        <el-aside class="aside-Right" width="200px">
-          <RightAside></RightAside>
-          <el-backtop :right="100" :bottom="100" />
-        </el-aside>
-      </el-container>
-    </el-container>
+  <div class="UsermainBox">
+    <AdminWindow></AdminWindow>
   </div>
 </template>
 
 <script>
-import LeftTitle from '@/components/LeftTitle.vue'
-import GameList from '@/components/User/GameList.vue'
-import SearchVue from '@/components/SearchVue.vue'
-import RightAside from '@/components/RightAside.vue'
-import { Back } from '@element-plus/icons-vue'
+import UserWindow from '@/views/UserWindow.vue'
+import AdminWindow from '@/views/AdminWindow.vue'
 export default {
   name: 'App',
   data(){
@@ -60,11 +26,8 @@ export default {
     }
   },
   components: {
-    LeftTitle,
-    GameList,
-    SearchVue,
-    RightAside,
-    Back
+    AdminWindow,
+    UserWindow
   },
   methods: {
     reload(){
@@ -105,12 +68,6 @@ export default {
   text-align: center;
 }
 
-.mainBox {
-  background-color: #f5f7f8;
-  height: 100%;
-  width: 100%;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -120,26 +77,6 @@ export default {
   display: none;
 }
 
-.aside-Left {
-  height: calc(120vh - 70px);
-}
-
-.aside-Right {
-  height: calc(120vh - 70px);
-}
-
-.main-part {
-  background-color: white;
-  height: calc(120vh - 70px);
-}
-
-.div-card {
-  width: 900px;
-  display: -webkit-box;
-  -webkit-box-pack: center;
-  -webkit-box-align: center;
-  -webkit-box-orient: vertical;
-}
 ::-webkit-scrollbar{
   width: 0 !important;
 }
