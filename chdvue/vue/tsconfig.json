@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "sourceMap": true,
+    "baseUrl": "./",
+    "noImplicitAny": false,
+    "allowJs": true,
+    "types": [
+      "webpack-env"
+    ],
+    "paths": {
+      "vuex": [
+        "node_modules/vuex/types/index.d.ts"
+      ],
+      "vue-router": [
+        "node_modules/........"
+      ],
+      "@/*": [
+        "src/*"
+      ],
+      "components":["src/components/*"],
+      "_pinia/*":["src/pinia/*"]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "**/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "suppressImplicitAnyIndexErrors":true
+}
