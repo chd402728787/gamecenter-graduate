@@ -6,7 +6,7 @@
 -->
 <template>
   <div class="UsermainBox">
-    <UserWindow></UserWindow>
+    <AdminWindow></AdminWindow>
   </div>
 </template>
 

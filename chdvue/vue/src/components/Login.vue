@@ -35,13 +35,14 @@ export default {
       } else if (this.form.password == '') {
         this.$message.error('密码不能为空');
       } else {
-        axios.get('http://127.0.0.1/login', {
+        this.$http.get('api/gameuser/find', {
           params: {
             username: this.form.username,
             password: this.form.password
           }
         }).then(res => {
-          if (res.data.status == 200) {
+          console.log(res.data);
+          if (res.data.length!==0) {
             this.$router.push({
               path: '/',
               query: {

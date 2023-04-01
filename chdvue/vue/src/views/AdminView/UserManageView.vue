@@ -1,8 +1,15 @@
 <template>
-    <div></div>
+    <div>
+      <UserManage></UserManage>
+    </div>
 </template>
-<script setup lang="ts">
-
+<script lang="ts">
+import UserManage from '@/components/Admin/UserManage.vue';
+export default {
+  components: {
+    UserManage
+  }
+}
 </script>
 <style lang="less" scoped>
 </style>

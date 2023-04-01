@@ -33,22 +33,32 @@ export default {
 
   methods: {
     register() {
-      if (this.form.username == '') {
+      if (this.form.username === '') {
         this.$message.error('用户名不能为空');
-      } else if (this.form.password == '') {
+      } else if (this.form.password === '') {
         this.$message.error('密码不能为空');
       } else {
-        axios.post('http://127.0.0.1/register', this.form)
-        .then(res => {
+        this.$http.get('api/gameuser/find', {
+          params:{
+            username:this.form.username,
+            password:this.form.password
+          }
+        })
+        .then((res) => {
           // console.log(res.data.message);
-          if (res.data.status == 200) {
-            this.$alert('是否返回登录页面', '注册成功', {
-              confirmButtonText: '确定',
-              callback: action => {
-                this.$router.push('/login')
-              }
+          if (res.data.length==0) {
+            this.$http.put('api/gameuser/add', this.form)
+              .then((res)=>{
+              this.$alert('是否返回登录页面', '注册成功', {
+                confirmButtonText: '确定',
+                callback: action => {
+                  this.$router.push('/login')
+                }
+              })
+            }).catch(err => {
+              console.log('注册失败' + err);
             })
-          } else if (res.data.status == 202) {
+          } else if(res.data.length!=0){
             this.$alert('用户名已存在', '注册失败', {
               confirmButtonText: '确定',
               callback: action => {

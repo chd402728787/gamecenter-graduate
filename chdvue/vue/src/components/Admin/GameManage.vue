@@ -6,90 +6,155 @@
 -->
 <template>
   <div>
-    <div class="left">
-      <el-button type="primary" @click="all">获取game表的全部数据</el-button>
-      <h2>-----------------------------------</h2>
-      <el-input v-model="id" placeholder="请输入id" class="input"></el-input>
-      <el-button type="danger" @click="del">删除</el-button>
-      <el-button type="primary" @click="get">查询</el-button>
-      <h2>-----------------------------------</h2>
-      <el-input v-model="id" placeholder="请输入id" class="input"></el-input>
-      <el-input
-        v-model="gname"
-        placeholder="请输入游戏名"
-        class="input"
-      ></el-input>
-      <el-input v-model="img" placeholder="请输入图片" class="input"></el-input>
-      <el-upload
-        v-model:file-list="fileList"
-        class="img-upload"
-        action="http://localhost:3000"
-        :http-request="uploadHttpRequest"
-        multiple
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        :before-upload="beforeUpload"
-        :limit="1"
-        :on-exceed="handleExceed"
-        :on-error="handlerror"
-      >
-        <el-button type="primary">Click to upload</el-button>
-        <template #tip>
-          <div class="el-upload__tip">
-            jpg/png files with a size less than 500KB.
-          </div>
+    <!-- 搜索筛选 -->
+    <el-form ref="searchform" :inline="true" class="user-search">
+      <el-form-item label="搜索：">
+        <el-input size="small" v-model="searchForm.id" placeholder="输入id"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button size="small" type="primary" @click="get"><el-icon><Search /></el-icon>搜索</el-button>
+        <el-button size="small" type="primary" @click="all"><el-icon><View /></el-icon>查询全部</el-button>
+        <el-button size="small" type="primary" @click="openAMD"><el-icon><Plus /></el-icon>添加</el-button>
+      </el-form-item>
+    </el-form>
+    <!--列表-->
+    <el-table :data="game" size="small" highlight-current-row border element-loading-text="拼命加载中" style="width: 100%;">
+      <el-table-column align="center" type="selection" width="60">
+      </el-table-column>
+      <el-table-column sortable prop="id" label="序号" width="100">
+      </el-table-column>
+      <el-table-column sortable prop="gname" label="游戏名" width="200">
+      </el-table-column>
+      <el-table-column sortable prop="img" label="图片" width="200">
+        <template v-slot = "scope">
+          <img :src="scope.row.img" width="100"/>
         </template>
-      </el-upload>
-      <el-input
-        v-model="gamelink"
-        placeholder="请输入游戏链接"
-        type="textarea"
-        class="input"
-      ></el-input>
-      <el-input
-        v-model="introduction"
-        placeholder="请输入游戏介绍"
-        type="textarea"
-        class="input"
-      ></el-input>
-      <el-button type="primary" @click="add">添加</el-button>
-      <el-button type="primary" @click="update">修改</el-button>
-    </div>
-    <div class="right">
-      <el-table :data="game" class="hovertable">
-        <el-table-column prop="id" label="ID" width="50px" />
-        <el-table-column prop="gname" label="游戏名" width="100px" />
-        <el-table-column prop="img" label="图片">
-          <template v-slot="scope">
-            <img :src="scope.row.img" style="width: 100px; height: 100px" />
-          </template>
-        </el-table-column>
-        <el-table-column prop="gamelink" label="游戏链接" />
-        <el-table-column prop="introduction" label="游戏介绍" />
-      </el-table>
-    </div>
+      </el-table-column>
+      <el-table-column sortable prop="introduction" label="简介" width="300">
+      </el-table-column>
+      <el-table-column sortable prop="gamelink" label="游戏链接" width="300">
+      </el-table-column>
+      <el-table-column align="center" label="操作" min-width="300">
+        <template v-slot="scope">
+          <el-button size="small" @click="editOpen(scope.row)">编辑</el-button>
+          <el-button size="small" type="danger" @click="del(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!-- 编辑界面 -->
+    <el-dialog v-model="addMD" width="30%" >
+      <el-form label-width="120px" ref="editForm">
+        <el-form-item label="游戏名" prop="gname">
+          <el-input size="small" v-model="editForm.gname" placeholder="请输入游戏名"></el-input>
+        </el-form-item>
+        <el-form-item label="介绍" prop="introduction">
+          <el-input size="small" v-model="editForm.introduction" placeholder="请输入游戏介绍"></el-input>
+        </el-form-item>
+        <el-form-item label="图片" prop="img">
+          <el-input size="small" v-model="editForm.img" placeholder="请输入图片"></el-input>
+          <el-upload
+            ref="uploadImg"
+            class="imgurl"
+            :limit="1"
+            action="http://localhost:8080/upload"
+            :before-upload="beforeUpload"
+            :on-success="onSuccess"
+            :on-error="onError"
+            :file-list="fileList"
+            list-type="picture"
+          >
+            <template #trigger>
+              <el-button type="primary">select file</el-button>
+            </template>
+            <template #tip>
+              <div class="el-upload__tip text-red">
+                limit 1 file, new file will cover the old file
+              </div>
+            </template>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="链接" prop="gamelink">
+          <el-input size="small" v-model="editForm.gamelink" placeholder="请输入游戏链接"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="cancelAMD">取消</el-button>
+        <el-button size="small" type="primary" class="title" @click="add">保存</el-button>
+      </div>
+    </el-dialog>
+    <!-- 编辑界面 -->
+    <el-dialog v-model="updateMD" width="30%" >
+      <el-form label-width="120px" ref="updateForm">
+        <el-form-item label="游戏名" prop="gname">
+          <el-input size="small" v-model="updateForm.gname" placeholder="请输入游戏名"></el-input>
+        </el-form-item>
+        <el-form-item label="介绍" prop="introduction">
+          <el-input size="small" v-model="updateForm.introduction" placeholder="请输入游戏介绍"></el-input>
+        </el-form-item>
+        <el-form-item label="图片" prop="img">
+          <el-input size="small" v-model="updateForm.img" placeholder="请输入图片"></el-input>
+        </el-form-item>
+        <el-form-item label="链接" prop="gamelink">
+          <el-input size="small" v-model="updateForm.gamelink" placeholder="请输入游戏链接"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="cancelUMD">取消</el-button>
+        <el-button size="small" type="primary" class="title" @click="update()">保存</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
-import axios from 'axios';
-import { ElMessage } from 'element-plus';
 import 'element-plus/theme-chalk/el-message-box.css';
+import {Plus, Search, View} from "@element-plus/icons-vue";
+import {genFileId} from "element-plus";
 
 export default {
   name: 'GameManager',
+  components: {View, Search, Plus},
   data() {
     return {
-      id: '',
-      gname: '',
-      img: '',
+      addMD:false,
+      updateMD:false,
+      game: [],
       fileList: [],
-      gamelink: '',
-      introduction: '',
-      game: []
+      searchForm: {
+        id:'',
+        gname: '',
+        img: '',
+        gamelink: '',
+        introduction: '',
+      },
+      editForm: {
+        id:'',
+        gname: '',
+        img: '',
+        gamelink: '',
+        introduction: '',
+      },
+      updateForm: {
+        id:'',
+        gname: '',
+        img: '',
+        gamelink: '',
+        introduction: '',
+      }
     };
   },
+  created() {
+    this.all();
+  },
   methods: {
+    openAMD(){
+      this.addMD = true;
+    },
+    cancelAMD(){
+      this.addMD = false;
+    },
+    cancelUMD(){
+      this.updateMD = false;
+    },
     all(){
       let that = this;
       this.$http.get("/api/game/findAll").then((res)=>{
@@ -100,10 +165,10 @@ export default {
           console.log('获取数据失败' + err);
         });
     },
-    del() {
+    del(row) {
       // 删除操作
       let that = this
-      this.$http.delete('/api/game/delGameByID?id='+that.id)
+      this.$http.delete('/api/game/delGameByID?id='+row.id)
         .then((res) => {
           // console.log(res.data);
           this.all();
@@ -125,72 +190,62 @@ export default {
     add() {
       // 添加操作
       let that = this
-      this.$http.put('/api/game/add', {
-          params: {
-            gname: that.gname,
-            img: that.img,
-            gamelink: that.gamelink,
-            introduction: that.introduction
-          }
-        })
+      this.$http.put('/api/game/add',this.editForm)
         .then((res) => {
            //console.log(res.data.status);
+          this.game = res.data;
           that.all();
+          this.addMD = false;
         })
         .catch((err) => {
           console.log('操作失败' + err);
         });
+    },
+    editOpen(row){
+      this.updateForm.id = row.id;
+      this.updateMD = true;
     },
     update() {
       // 修改操作
       let that = this
-      let udparams = {
-        id:that.id,
-        gname: that.gname,
-        img: that.img,
-        gamelink: that.gamelink,
-        introduction: that.introduction
-      }
-      this.$http.put('/api/game/update', udparams)
+      this.$http.put('/api/game/update', this.updateForm)
         .then((res) => {
           //console.log(res.data.status);
+          this.game = res.data;
           that.all();
+          this.updateMD = false;
         })
         .catch((err) => {
           console.log('操作失败' + err);
         });
     },
+    setup() {
+      const fileList = ref([]);
 
-    handlePreview(file) {
-      console.log(file);
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    beforeRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    beforeUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isPNG = file.type === 'image/png';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isJPG && !isPNG) ElMessage.error('上传图片只能是jpg/png格式！');
-      if (!isLt2M) ElMessage.error('上传图片大小不能超过 2MB!');
-      return isJPG && isLt2M;
-    },
-    handleExceed(files, fileList) {
-      ElMessage({
-        message: '只可添加一张图片',
-        type: warning
-      });
-    },
-    handlerror(err, file, fileList) {
-      console.log('err', err);
+      const beforeUpload = (file) => {
+        file.name = "D:/Desktop/毕设/gamecenter-graduate/chdvue/vue/src/assets/images/" + file.name;
+        return true;
+      };
+
+      const onSuccess = (response, file, fileList) => {
+        this.$message.success("上传成功");
+      };
+
+      const onError = (err, file, fileList) => {
+        this.$message.error("上传失败");
+      };
+
+      return {
+        fileList,
+        beforeUpload,
+        onSuccess,
+        onError
+      };
     }
-  },
-  setup() {}
+  }
 };
 </script>
+
 <style scoped>
 .el-table.cell {
   white-space: pre-wrap;

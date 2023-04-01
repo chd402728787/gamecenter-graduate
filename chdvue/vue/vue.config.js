@@ -14,7 +14,6 @@ module.exports = {
     devServer: {
         open: true, // auto open brower 项目启动后自动打开浏览器...
         allowedHosts: 'all',
-        assetPubicPath:'./',
         host: 'localhost',
         port: 8080, // 修改端口号
         https: false,

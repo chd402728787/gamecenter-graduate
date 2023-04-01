@@ -3,7 +3,7 @@ package com.example.springboot.entity;
 import lombok.Data;
 
 @Data
-public class gameUser {
+public class user {
     int id;
     String username;
     String password;

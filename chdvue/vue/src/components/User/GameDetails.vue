@@ -124,7 +124,7 @@ export default {
     },
 
     evaluateUpdate() { // 评价表修改操作
-      this.$http.get('api/evaluate/update', {
+      this.$http.put('api/evaluate/update', {
         params: {
           id: this.gameid,
           gname: this.gameinfo[this.gameid - 1].gname,
@@ -132,14 +132,7 @@ export default {
         }
       }).then(res => {
         // console.log(res.data)
-        if (res.data.status == 200) {
           console.log('评价成功')
-        } else {
-          this.$message({
-            message: '评价失败',
-            type: 'error'
-          });
-        }
       }).catch(err => {
         console.log('操作失败' + err)
       })
@@ -161,11 +154,11 @@ export default {
     }).catch(err => {
       console.log('获取数据失败' + err)
     }),
-      this.$http.get('api/game/findAll').then(res => { // 查找evaluate表全部数据
+      this.$http.get('api/evaluate/findAll').then(res => { // 查找evaluate表全部数据
+        //console.log(res.data)
         this.evaluateinfo = res.data;
         this.evaluation = this.evaluateinfo[this.gameid - 1].evaluation;
         this.evaluationArray = this.evaluation.split('chd');
-        // console.log(this.evaluationArray)
       }).catch(err => {
         console.log('获取数据失败' + err);
       })
