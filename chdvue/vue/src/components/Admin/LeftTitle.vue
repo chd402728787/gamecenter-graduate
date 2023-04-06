@@ -63,7 +63,9 @@ export default {
 </script>
 
 <style scoped>
-.leftMenu{
-  text-align: center;
+.el-menu-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

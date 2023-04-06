@@ -12,9 +12,9 @@ public interface gameuserMapper {
     List<user> find(String username,String password);
     @Select("select * from gameuser where username=#{username}")
     List<user> findByName(String username);
-    @Insert("insert into gameuser (username,password) value (#{username},#{password})")
+    @Insert("insert into gameuser (username,password,nickname,sex,introduction) values (#{username},#{password},#{nickname},#{sex},#{introduction})")
     void add(user u);
-    @Update("update gameuser set username=#{username}, password=#{password} where id=#{id}")
+    @Update("update gameuser set username=#{username}, password=#{password},nickname=#{nickname},sex=#{sex},introduction=#{introduction} where id=#{id}")
     void update(user u);
     @Delete("delete from gameuser where id = #{id}")
     void delGuserByID(Integer id);

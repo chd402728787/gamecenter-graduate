@@ -62,7 +62,7 @@
           <template #footer>
             <span class="dialog-footer">
               <el-button @click="dialogEvaluateVisible = false">Cancel</el-button>
-              <el-button @click="writeEvaluation">Confirm</el-button>
+              <el-button @click="evaluateUpdate">Confirm</el-button>
             </span>
           </template>
         </el-dialog>
@@ -87,7 +87,6 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { Star } from '@element-plus/icons-vue';
 export default {
-  inject: ['reload'],
   name: 'GameDetails',
   components: {
     Star
@@ -109,44 +108,38 @@ export default {
       spaceposition: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
     };
   },
-  setup() {
-    const evaluationInput = ref('')
-  },
 
   methods: {
-    writeEvaluation() { // 将评价写入数据库
-      // console.log(this.evaluation)
-      this.evaluation += this.evaluationInput + 'chd'
-      this.evaluateUpdate()
-      this.dialogEvaluateVisible = false
-      this.gamedetailName = 'second'
-      this.reload()
-    },
-
-    evaluateUpdate() { // 评价表修改操作
-      this.$http.put('api/evaluate/update', {
-        params: {
+    evaluateUpdate(){
+      this.$http.get('api/game/findAll').then(res => { // 查找game表全部数据
+        this.gameinfo = res.data;
+        let paramse = {
           id: this.gameid,
-          gname: this.gameinfo[this.gameid - 1].gname,
-          evaluation: this.evaluation
+          evaluation: this.evaluation+ this.evaluationInput + 'chd'
         }
-      }).then(res => {
-        // console.log(res.data)
+        this.$http.put('api/evaluate/update', paramse).then(res => {
+          //console.log(this.evaluation+ this.evaluationInput + 'chd')
           console.log('评价成功')
+          this.dialogEvaluateVisible = false
+          this.$router.push({
+            path:'/user/gamedetails/?id='+this.gameid
+          })
+        }).catch(err => {
+          console.log('操作失败' + err)
+        })
       }).catch(err => {
-        console.log('操作失败' + err)
+        console.log('获取数据失败' + err)
       })
     }
   },
-
   created() {
     this.gameid = this.$route.query.id;
     this.$http.get('api/game/findAll').then(res => { // 查找game表全部数据
       this.gameinfo = res.data
       this.$refs.gameDetailImg.src = this.gameinfo[this.gameid - 1].img// 游戏详情大图
       this.$refs.gamedetailtext1.innerHTML = this.gameinfo[this.gameid - 1].introduction// 游戏介绍
-
-      if (this.gamelink) {
+      //console.log(this.gameinfo)
+      if (this.gameinfo[this.gameid - 1].gamelink) {
  this.$refs.gamestart.$el.addEventListener('click', () => {
         window.location.href = this.gameinfo[this.gameid - 1].gamelink
       })
@@ -158,6 +151,7 @@ export default {
         //console.log(res.data)
         this.evaluateinfo = res.data;
         this.evaluation = this.evaluateinfo[this.gameid - 1].evaluation;
+        if(this.evaluation == undefined) this.evaluation="";
         this.evaluationArray = this.evaluation.split('chd');
       }).catch(err => {
         console.log('获取数据失败' + err);

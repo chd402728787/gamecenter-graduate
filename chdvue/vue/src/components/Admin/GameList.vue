@@ -20,7 +20,6 @@ export default {
       info: []
     };
   },
-
   created () {
     this.$http.get('api/game/findAll').then(res => {
           this.info = res.data

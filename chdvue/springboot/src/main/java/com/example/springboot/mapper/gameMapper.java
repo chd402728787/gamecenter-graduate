@@ -14,8 +14,12 @@ public interface gameMapper {
     @Insert("insert into game (gname,img,gamelink,introduction) " +
             "values (#{gname},#{img},#{gamelink},#{introduction})")
     void add(game g);
-    @Update("update game set gname=#{gname}, img=#{img}, gamelink=#{gamelink},introduction=#{introduction} where id=#{id}")
+    @Update("update game " +
+            "set gname=#{gname}, img=#{img}, gamelink=#{gamelink},introduction=#{introduction},hotvalue=#{hotvalue} " +
+            "where id=#{id}")
     void update(game g);
+    @Update("update game set hotvalue=#{hotvalue} where id=#{id}")
+    void updatehot(game g);
     @Delete("delete from game where id = #{id}")
     void delGameByID(Integer id);
 }

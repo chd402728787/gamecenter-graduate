@@ -22,6 +22,9 @@ public class gameService {
     public void update(game g){
         gMapper.update(g);
     }
+    public void updatehot(game g){
+        gMapper.updatehot(g);
+    }
     public void delGameByID(Integer id){
         gMapper.delGameByID(id);
     }

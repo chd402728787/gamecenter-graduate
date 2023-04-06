@@ -32,9 +32,9 @@
       </el-table-column>
       <el-table-column sortable prop="introduction" label="简介" width="300">
       </el-table-column>
-      <el-table-column sortable prop="gamelink" label="游戏链接" width="300">
+      <el-table-column sortable prop="gamelink" label="游戏链接" width="150">
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="300">
+      <el-table-column align="center" label="操作" min-width="200">
         <template v-slot="scope">
           <el-button size="small" @click="editOpen(scope.row)">编辑</el-button>
           <el-button size="small" type="danger" @click="del(scope.row)">删除</el-button>
@@ -51,27 +51,7 @@
           <el-input size="small" v-model="editForm.introduction" placeholder="请输入游戏介绍"></el-input>
         </el-form-item>
         <el-form-item label="图片" prop="img">
-          <el-input size="small" v-model="editForm.img" placeholder="请输入图片"></el-input>
-          <el-upload
-            ref="uploadImg"
-            class="imgurl"
-            :limit="1"
-            action="http://localhost:8080/upload"
-            :before-upload="beforeUpload"
-            :on-success="onSuccess"
-            :on-error="onError"
-            :file-list="fileList"
-            list-type="picture"
-          >
-            <template #trigger>
-              <el-button type="primary">select file</el-button>
-            </template>
-            <template #tip>
-              <div class="el-upload__tip text-red">
-                limit 1 file, new file will cover the old file
-              </div>
-            </template>
-          </el-upload>
+          <el-input size="small" v-model="editForm.img" placeholder="请输入图片URL"></el-input>
         </el-form-item>
         <el-form-item label="链接" prop="gamelink">
           <el-input size="small" v-model="editForm.gamelink" placeholder="请输入游戏链接"></el-input>
@@ -109,6 +89,7 @@
 import 'element-plus/theme-chalk/el-message-box.css';
 import {Plus, Search, View} from "@element-plus/icons-vue";
 import {genFileId} from "element-plus";
+import {ref} from "vue";
 
 export default {
   name: 'GameManager',
@@ -219,29 +200,6 @@ export default {
           console.log('操作失败' + err);
         });
     },
-    setup() {
-      const fileList = ref([]);
-
-      const beforeUpload = (file) => {
-        file.name = "D:/Desktop/毕设/gamecenter-graduate/chdvue/vue/src/assets/images/" + file.name;
-        return true;
-      };
-
-      const onSuccess = (response, file, fileList) => {
-        this.$message.success("上传成功");
-      };
-
-      const onError = (err, file, fileList) => {
-        this.$message.error("上传失败");
-      };
-
-      return {
-        fileList,
-        beforeUpload,
-        onSuccess,
-        onError
-      };
-    }
   }
 };
 </script>

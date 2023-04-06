@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <el-form ref="form" :model="form" class="login-container">
-      <h1 class="login-title">登录页面</h1>
+      <h1 class="login-title">管理员登录页面</h1>
       <el-form-item label="用户名:">
         <el-input v-model="form.username"></el-input>
       </el-form-item>
@@ -9,18 +9,18 @@
         <el-input v-model="form.password" type="password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="login" class="btn-login">登录</el-button>
+        <el-button @click="login" class="btn-login" ref="btn-login">登录</el-button>
       </el-form-item>
-      <router-link to="/register" class="routerlink-to-register">点此注册</router-link>
+      <router-link to="/userlogin" class="change-name">用户登录</router-link>
     </el-form>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data() {
     return {
+      changeValue:0,
       form: {
         username: '',
         password: ''
@@ -35,19 +35,21 @@ export default {
       } else if (this.form.password == '') {
         this.$message.error('密码不能为空');
       } else {
-        this.$http.get('api/gameuser/find', {
+        this.$http.get('api/adminuser/find', {
           params: {
             username: this.form.username,
             password: this.form.password
           }
         }).then(res => {
-          console.log(res.data);
+          //console.log(res.data);
+          this.$store.state.displayAdmin=1;
+          this.$store.state.displayUser=0;
+          this.$store.state.logined=true;
           if (res.data.length!==0) {
             this.$router.push({
-              path: '/',
+              path: '/admin/usermanage',
               query: {
-                username: this.form.username,
-                password: this.form.password
+                id:1
               }
             })
           } else {
@@ -102,9 +104,10 @@ export default {
   color: #f5f7f8;
 }
 
-.routerlink-to-register {
+.routerlink-to-register,.change-name {
   font-size: x-small;
   color: #2C3E50;
   opacity: 0.6;
+  margin-right: 10px;
 }
 </style>

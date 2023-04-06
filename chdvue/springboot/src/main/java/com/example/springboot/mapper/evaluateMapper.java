@@ -13,7 +13,7 @@ public interface evaluateMapper {
     @Insert("insert into evaluate (gname,evaluation) " +
             "values (#{gname},#{evaluation})")
     void add(evaluate u);
-    @Update("update evaluate set gname=#{gname}, evaluation=#{evaluation} where id=#{id}")
+    @Update("update evaluate set evaluation=#{evaluation} where id=#{id}")
     void update(evaluate u);
     @Delete("delete from evaluate where id = #{id}")
     void delEvaByID(Integer id);

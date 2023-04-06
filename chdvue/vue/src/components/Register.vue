@@ -1,6 +1,5 @@
 <template>
   <div class="register-wrap">
-
         <el-form ref="form" :model="form" class="register-container">
         <h1 class="register-title">注册页面</h1>
         <el-form-item label="用户名:">
@@ -9,12 +8,23 @@
         <el-form-item label="密&nbsp&nbsp&nbsp&nbsp码:">
             <el-input v-model="form.password" type="password"></el-input>
         </el-form-item>
+          <el-form-item label="昵&nbsp&nbsp&nbsp&nbsp称:">
+            <el-input v-model="form.nickname"></el-input>
+          </el-form-item>
+          <el-form-item label="性&nbsp&nbsp&nbsp&nbsp别:">
+            <el-select v-model="form.sex" placeholder="请选择性别">
+              <el-option label="男" value="男"></el-option>
+              <el-option label="女" value="女"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="简&nbsp&nbsp&nbsp&nbsp介:">
+            <el-input v-model="form.introduction" type="textarea"></el-input>
+          </el-form-item>
         <el-form-item>
           <el-button @click="register" class="btn-register">注册</el-button>
         </el-form-item>
-        <router-link to="/login" class="routerlink-to-login">返回登录</router-link>
+        <router-link to="/userlogin" class="routerlink-to-login">返回登录</router-link>
         </el-form>
-
   </div>
 </template>
 
@@ -25,7 +35,10 @@ export default {
     return {
       form: {
         username: '',
-        password: ''
+        password: '',
+        nickname:'',
+        sex:'',
+        introduction:''
       },
       isnull: false
     };
@@ -38,10 +51,9 @@ export default {
       } else if (this.form.password === '') {
         this.$message.error('密码不能为空');
       } else {
-        this.$http.get('api/gameuser/find', {
+        this.$http.get('api/gameuser/findByName', {
           params:{
-            username:this.form.username,
-            password:this.form.password
+            username:this.form.username
           }
         })
         .then((res) => {
@@ -83,7 +95,6 @@ export default {
   width: 100%;
   height: 100%;
   padding-top: 10%;
-  /* background-color: #112346; */
   background-repeat: no-repeat;
   background-position: center right;
   background-size: 100%;

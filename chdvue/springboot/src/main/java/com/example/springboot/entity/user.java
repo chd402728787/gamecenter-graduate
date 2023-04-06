@@ -7,5 +7,8 @@ public class user {
     int id;
     String username;
     String password;
+    String nickname;
+    String sex;
+    String introduction;
 }
 

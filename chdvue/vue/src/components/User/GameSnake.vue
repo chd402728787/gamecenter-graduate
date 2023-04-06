@@ -262,8 +262,8 @@ export default {
                 startY = event.touches[0].pageY;
                 break;
               case 'touchend':
-                var spanX = event.changedTouches[0].pageX - startX;
-                var spanY = event.changedTouches[0].pageY - startY;
+                let spanX = event.changedTouches[0].pageX - startX;
+                let spanY = event.changedTouches[0].pageY - startY;
 
                 if (Math.abs(spanX) > Math.abs(spanY)) {
                   // 认定为水平方向滑动

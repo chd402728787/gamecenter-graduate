@@ -6,7 +6,8 @@
 -->
 <template>
   <div class="UsermainBox">
-    <AdminWindow></AdminWindow>
+    <AdminWindow v-show="display2"></AdminWindow>
+    <UserWindow v-show="display1"></UserWindow>
   </div>
 </template>
 
@@ -17,6 +18,8 @@ export default {
   name: 'App',
   data() {
     return {
+      display1:this.$store.state.displayUser,
+      display2:this.$store.state.displayAdmin,
       isRouterAlive: true
     }
   },
@@ -45,7 +48,12 @@ export default {
       }
     }
   },
-
+  watch: {
+    $route(to, from) {
+      this.display1=this.$store.state.displayUser;
+      this.display2=this.$store.state.displayAdmin;
+    }
+  },
   mounted() {
     // window.addEventListener("scroll", this.showSearch);
     /* showSearch((res)=>{

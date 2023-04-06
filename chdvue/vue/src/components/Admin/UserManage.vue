@@ -12,16 +12,22 @@
         </el-form-item>
       </el-form>
       <!--列表-->
-      <el-table :data="userinfo" size="small" highlight-current-row border element-loading-text="拼命加载中" style="width: 100%;">
+      <el-table :data="userinfo" size="small" highlight-current-row border element-loading-text="拼命加载中" style="">
         <el-table-column align="center" type="selection" width="60">
         </el-table-column>
-        <el-table-column sortable prop="id" label="序号" width="300">
+        <el-table-column sortable prop="id" label="序号" width="100">
         </el-table-column>
-        <el-table-column sortable prop="username" label="用户名" width="300">
+        <el-table-column sortable prop="username" label="用户名" width="100">
         </el-table-column>
-        <el-table-column sortable prop="password" label="密码" width="300">
+        <el-table-column sortable prop="password" label="密码" width="100">
         </el-table-column>
-        <el-table-column align="center" label="操作" min-width="300">
+        <el-table-column sortable prop="nickname" label="nickname" width="100">
+        </el-table-column>
+        <el-table-column sortable prop="sex" label="sex" width="100">
+        </el-table-column>
+        <el-table-column sortable prop="introduction" label="introduction" width="300">
+        </el-table-column>
+        <el-table-column align="center" label="操作" min-width="200">
           <template v-slot="scope">
             <el-button size="small" @click="editOpen(scope.row)">编辑</el-button>
             <el-button size="small" type="danger" @click="del(scope.row)">删除</el-button>
@@ -34,8 +40,20 @@
           <el-form-item label="用户名" prop="username">
             <el-input size="small" v-model="editForm.username" placeholder="请输入用户名"></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="password">
+          <el-form-item label="密&nbsp&nbsp&nbsp&nbsp码" prop="password">
             <el-input size="small" type="password" v-model="editForm.password" placeholder="请输入密码"></el-input>
+          </el-form-item>
+          <el-form-item label="昵&nbsp&nbsp&nbsp&nbsp称:">
+            <el-input v-model="editForm.nickname"></el-input>
+          </el-form-item>
+          <el-form-item label="性&nbsp&nbsp&nbsp&nbsp别:">
+            <el-select v-model="editForm.sex" placeholder="请选择性别">
+              <el-option label="男" value="男"></el-option>
+              <el-option label="女" value="女"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="简&nbsp&nbsp&nbsp&nbsp介:">
+            <el-input v-model="editForm.introduction" type="textarea"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -51,6 +69,18 @@
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input size="small" type="password" v-model="updateForm.password" placeholder="请输入密码"></el-input>
+          </el-form-item>
+          <el-form-item label="昵&nbsp&nbsp&nbsp&nbsp称:">
+            <el-input v-model="updateForm.nickname"></el-input>
+          </el-form-item>
+          <el-form-item label="性&nbsp&nbsp&nbsp&nbsp别:">
+            <el-select v-model="updateForm.sex" placeholder="请选择性别">
+              <el-option label="男" value="男"></el-option>
+              <el-option label="女" value="女"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="简&nbsp&nbsp&nbsp&nbsp介:">
+            <el-input v-model="updateForm.introduction" type="textarea"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -84,12 +114,18 @@ export default {
       },
       editForm: {
         username: '',
-        password: ''
+        password: '',
+        nickname:'',
+        sex:'',
+        introduction:''
       },
       updateForm: {
         id:'',
         username: '',
-        password: ''
+        password: '',
+        nickname:'',
+        sex:'',
+        introduction:''
       }
     };
   },

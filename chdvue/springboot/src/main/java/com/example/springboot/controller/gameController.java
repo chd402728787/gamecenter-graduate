@@ -32,6 +32,10 @@ public class gameController {
     public void update(@RequestBody game g){
         gameS.update(g);
     }
+    @PutMapping(value = "/updatehot")
+    public void updatehot(@RequestBody game g){
+        gameS.updatehot(g);
+    }
 
     @DeleteMapping(value = "/delGameByID")
     public void delGameByID(@RequestParam("id") Integer id) {

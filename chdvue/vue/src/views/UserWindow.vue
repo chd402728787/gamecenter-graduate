@@ -26,7 +26,7 @@
 
       <!--常驻列表-->
       <el-container>
-        <el-aside class="aside-Right" width="200px">
+        <el-aside class="aside-Right">
           <RightAside></RightAside>
           <el-backtop :right="100" :bottom="100" />
         </el-aside>
@@ -75,18 +75,6 @@ export default {
         this.$router.go(-1);
       }
     }
-  },
-
-  mounted() {
-    // window.addEventListener("scroll", this.showSearch);
-    /* showSearch((res)=>{
-      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      if (scrollTop > 50) {
-        this.showFixedSearch = true;
-      }
-      else {
-        this.showFixedSearch = false;
-      }}) */
   }
 }
 </script>
@@ -98,24 +86,16 @@ export default {
   width: 100%;
 }
 
-.aside-Left {
-  height: calc(120vh - 70px);
-}
-
-.aside-Right {
-  height: calc(120vh - 70px);
-}
-
 .main-part {
+  width: 1300px;
   background-color: white;
-  height: calc(120vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .div-card {
-  width: 900px;
-  display: -webkit-box;
-  -webkit-box-pack: center;
-  -webkit-box-align: center;
-  -webkit-box-orient: vertical;
+  width: 50%;
+  margin: 0 auto;
 }
 </style>

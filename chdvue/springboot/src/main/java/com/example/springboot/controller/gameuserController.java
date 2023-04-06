@@ -27,7 +27,7 @@ public class gameuserController {
         return urS.find(username, password);
     }
     @RequestMapping(value = "/findByName" ,method = RequestMethod.GET)
-    public List<user> find(@RequestParam("username") String username){
+    public List<user> findByName(@RequestParam("username") String username){
         //System.out.println(id);
         return urS.findByName(username);
     }

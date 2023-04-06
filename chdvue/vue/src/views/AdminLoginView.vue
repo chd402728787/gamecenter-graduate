@@ -1,13 +1,13 @@
 <template>
-    <div>
-      <Login></Login>
-    </div>
+  <div>
+    <AdminLogin></AdminLogin>
+  </div>
 </template>
 <script>
-import Login from '../components/Login.vue'
+import AdminLogin from '../components/AdminLogin.vue'
 export default {
   components: {
-    Login
+    AdminLogin
   }
 }
 

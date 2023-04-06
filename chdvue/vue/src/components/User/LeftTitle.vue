@@ -16,7 +16,6 @@
         <router-link to="/">
           <el-image :src="require('@/assets/images/logo.png')" style="height: 200px;" />
         </router-link>
-
         <el-menu-item index="/user/home">
           <el-icon>
             <House />
@@ -35,11 +34,11 @@
           </el-icon>
           <span>发现</span>
         </el-menu-item>
-        <el-menu-item index="/user/forum">
+        <el-menu-item index="/user/person">
           <el-icon>
             <ChatLineRound />
           </el-icon>
-          <span>论坛</span>
+          <span>个人中心</span>
         </el-menu-item>
       </el-menu>
     </el-col>
@@ -62,8 +61,10 @@ export default {
 }
 </script>
 
-<style scoped>
-.leftMenu{
-  text-align: center;
+<style>
+.el-menu-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

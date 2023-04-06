@@ -10,7 +10,7 @@
                 <el-table-column prop="img">
                   <template v-slot="scope">
                     <span>
-                      <router-link :to="{ path: '/user/gamedetails/', query: { id: scope.row.id } }">
+                      <router-link @click="updateHot(scope.row.id)" :to="{ path: '/user/gamedetails/', query: { id: scope.row.id } }">
                         <img :src="scope.row.img" alt="" style="width: 150px;height: 150px">
                       </router-link>
                     </span>
@@ -24,7 +24,7 @@
                 <el-table-column prop="img">
                   <template v-slot="scope">
                     <span>
-                      <router-link :to="{ path: '/user/gamedetails/', query: { id: scope.row.id } }">
+                      <router-link @click="updateHot(scope.row.id)" :to="{ path: '/user/gamedetails/', query: { id: scope.row.id } }">
                         <img :src="scope.row.img" alt="" style="width: 150px;height: 150px">
                       </router-link>
                     </span>
@@ -42,6 +42,7 @@
 <script>
 
 import axios from 'axios';
+import {ElMessage} from "element-plus";
 export default {
   name: 'Rank',
   data() {
@@ -51,28 +52,65 @@ export default {
       img: '',
       hotinfo: [], // 热门榜
       newinfo: [], // 新品榜
-      ranktabsvmodel: 'first'
+      ranktabsvmodel: 'first',
+      info:[]
     };
   },
   methods: {
-    sortDate(a, b) { // 对新品榜按时间排序
-        const x = a.date.replace(/-/g, '').replace(/:/g, '').replace('.', '').replace('T', '').replace('Z', '');
-        const y = b.date.replace(/-/g, '').replace(/:/g, '').replace('.', '').replace('T', '').replace('Z', '');
-        return y - x;
-    },
-    all(info) {
+    allnew() {
       this.$http.get('api/game/findAll').then(res => {
-      if (info == this.hotinfo) { this.hotinfo = res.data; } else {
-        this.newinfo = res.data.sort(this.sortDate);
+        this.newinfo = res.data.sort(function (a,b){
+          const x = a.date.replace(/-/g, '').replace(/:/g, '').replace('.', '').replace('T', '').replace('Z', '');
+          const y = b.date.replace(/-/g, '').replace(/:/g, '').replace('.', '').replace('T', '').replace('Z', '');
+          return x - y;
+        });
+      }).catch(err => {
+        console.log('获取数据失败' + err);
+      })
+      },
+    allhot(){
+      this.$http.get('api/game/findAll').then(res => {
+        this.hotinfo = res.data.sort(function (a,b){
+          return b.hotvalue-a.hotvalue;
+        });
+      }).catch(err => {
+        console.log('获取数据失败' + err);
+      })
+    },
+    updateHot(id){
+      if(this.$store.state.logined==false){
+        this.$router.push({
+          path:'/userlogin'
+        });
+        ElMessage({
+          message:'请先登录！',
+          type:'warning',
+          showClose:true
+        });
+      }else{
+        this.$http.get('api/game/findAll').then(res => {
+          this.info = res.data;
+          //console.log(this.info[id-1]);
+          let paramshot = {
+            id:id,
+            hotvalue:parseInt(this.info[id-1].hotvalue)+1
+          }
+          this.$http.put('/api/game/updatehot',paramshot)
+            .then((res)=>{
+              console.log('热度+1');
+            }).catch((err)=>{
+            console.log('更新热度失败'+err);
+          });
+        }).catch(err => {
+          console.log('获取数据失败' + err);
+        })
       }
-    }).catch(err => {
-      console.log('获取数据失败' + err);
-    })
-    }
+      }
   },
+
   created() {
-    this.all(this.hotinfo);
-    this.all(this.newinfo);
+    this.allnew();
+    this.allhot();
   }
 }
 </script>
