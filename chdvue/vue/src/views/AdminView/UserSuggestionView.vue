@@ -1,8 +1,15 @@
 <template>
-    <div></div>
+    <div>
+      <UserSuggestion></UserSuggestion>
+    </div>
 </template>
-<script setup lang="ts">
-
+<script>
+import UserSuggestion from "@/components/Admin/UserSuggestion.vue";
+export default {
+  components:{
+    UserSuggestion
+  }
+}
 </script>
-<style lang="less" scoped>
+<style>
 </style>

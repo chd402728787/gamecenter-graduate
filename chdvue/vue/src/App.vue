@@ -14,6 +14,7 @@
 <script>
 import UserWindow from '@/views/UserWindow.vue'
 import AdminWindow from '@/views/AdminWindow.vue'
+import {ElMessage} from "element-plus";
 export default {
   name: 'App',
   data() {
@@ -46,6 +47,16 @@ export default {
       } else {
         this.$router.go(-1);
       }
+    }
+  },
+  created() {
+    if(this.$store.state.logined==false){
+      ElMessage({
+        message:("请先登录！"),
+        showClose:true,
+        type:"warning"
+      });
+      this.$router.push('/userlogin');
     }
   },
   watch: {

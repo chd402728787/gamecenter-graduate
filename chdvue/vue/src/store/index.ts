@@ -5,7 +5,11 @@ export default createStore({
     displayUser:1,
     displayAdmin:0,
     logined:false,
-    loginedName:''
+    warningcount:0,
+    loginedName:'',
+    loginedNickName:'',
+
+    score2048:0
   },
   getters: {
   },

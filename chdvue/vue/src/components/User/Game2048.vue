@@ -1,234 +1,361 @@
 <template>
-  <div class="game">
-    <div class="playground">
-      <!--给每个行每个块分别取一个名儿-->
-      <div v-for="(row, ri) in cardList" :key="`card-row-${ri}`" class="card-row">
-        <div v-for="(card, i) in row" :key="`card-${i}`" class="card">
-          <div :class="['card-grid', { bounce: card.value > 0 }]" :key="`card-grid-${i}-${card.value}`"
-               :data-value="card.value">
-            {{ card.value > 0 ? card.value : '' }}
-          </div>
+  <div class="wrapper">
+    <div class="header">
+      <h1 class="title">2048</h1>
+      <div class="score">
+        <div>
+          <span>SCORE</span>
+          <span class="num">{{score}}</span>
         </div>
       </div>
     </div>
-    <!--分数和重新开始界面-->
-    <div class="gameFunc">
-      <br />
-      <h1>score:{{ store.state.score2048 }}</h1>
-      <el-button type="primary" @click="onResetGame">重新开始</el-button>
+    <el-button class="btn btn-mg" @click="newGame">新游戏</el-button>
+    <div>
+      <div class="over" v-if="over">
+        <p>Game over!</p>
+        <div class="btn" @click="newGame">Try again</div>
+      </div>
+      <div class="box">
+        <div class="row" v-for="row in list">
+          <div class="col" :class="'n-'+col" v-for="col in row">{{col}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, watch } from 'vue';
-// -- Emits
-// 父组件传来的方法
-const emit = defineEmits([
-  'no-change',
-  'point',
-]);
-const store = useStore();
-// 主要工具
-const cardChanged = ref(false);
-const [direction] = useTouchSlide('.playground');//触摸移动
-//通过移动方向判断下一个位置
-const getNextMap = {
-  1: (r, c) => () => r > 0 && cardList.value[--r][c],
-  2: (r, c) => () => cardList.value[r][++c],
-  3: (r, c) => () => r < 3 && cardList.value[++r][c],
-  4: (r, c) => () => cardList.value[r][--c],
-};
-//1：上 2：右 3：下 4：左
-const getLoopMap = {
-  1: onSlideTop,
-  2: onSlideRight,
-  3: onSlideDown,
-  4: onSlideLeft,
-};
-// 方块数组
-// [[], [], [], []]
-const cardList = ref([]);
-// 添加数值方块
-function onAddCard(cardNumber, list) {
-  if (cardNumber <= 0) return;
-  const indexList = list || cardList.value
-    .reduce(
-      (list, row, i) => list.concat(row.map((card, j) => ({
-        i,
-        j,
-        ...card
-      }))),
-      [],
-    )
-    .filter((card) => card.value == 0);
-  if (cardNumber > indexList.length) return;
-  const index = Math.floor(Math.random() * indexList.length);
-  const target = cardList.value[indexList[index].i][indexList[index].j];
-  target.value = 2;
-  indexList.splice(index, 1);
-  //console.log(cardList);//查看方块数组
-  return onAddCard(--cardNumber, indexList);
-}
-//方块移动
-function onMove(direction, r, c) {
-  let next;
-  let card = cardList.value[r][c];
-  // 如果方块存在
-  if (card.value > 0) {
-    const getNext = getNextMap[direction](r, c);
-    next = getNext();
-    // 移动
-    while (next && next.value == 0) {
-      next.value = card.value;
-      card.value = 0;
-      card = next;
-      next = getNext();
-      cardChanged.value = true;
-    }
-    // 合并
-    if (next && next.value === card.value) {
-      next.value *= 2;
-      card.value = 0;
-      cardChanged.value = true;
-      store.state.score2048 += next.value;
-      // 将新数值添加到方块上
-      emit('point', next.value);
-    }
-  }
-}
-function onSlideRight(direction) {
-  for (let r = 0; r < 4; r++) {
-    for (let c = 3; c >= 0; c--) {
-      onMove(direction, r, c);
-    }
-  }
-}
-function onSlideLeft(direction) {
-  for (let r = 0; r < 4; r++) {
-    for (let c = 0; c < 4; c++) {
-      onMove(direction, r, c);
-    }
-  }
-}
-function onSlideTop(direction) {
-  for (let c = 0; c < 4; c++) {
-    for (let r = 0; r < 4; r++) {
-      onMove(direction, r, c);
-    }
-  }
-}
-function onSlideDown(direction) {
-  for (let c = 0; c < 4; c++) {
-    for (let r = 3; r >= 0; r--) {
-      onMove(direction, r, c);
-    }
-  }
-}
-//重新开始游戏
-function onResetGame() {
-  cardList.value = Array(4).fill('').map(
-    () => Array(4).fill('').map(() => ({
-      value: 0
-    }))
-  );
-  onAddCard(2);
-  //console.log(store);
-  let score = store.state.score2048;
-  store.state.count2048++;  //记录游戏次数
-  store.state.scoreAll2048 += score;//记录总分
-  if (score > store.state.scoreMax2048)//记录最高分
-    store.state.scoreMax2048 = score;
-  store.state.score2048 = 0;    //当前分数清零
-}
-//方块数值变化则添加新方块，否则不变
-watch(direction, (newVal) => {
-  const loopFn = getLoopMap[newVal];
-  if (loopFn) {
-    loopFn(newVal);
-    if (cardChanged.value) {
-      onAddCard(1);
-      cardChanged.value = false;
-    } else {
-      emit('no-change');
-    }
-  }
-})
-// -- 游戏初始化
-onResetGame();
-//移动端触摸
-function useTouchSlide(selector, safeOffset = 20) {
-  // 1: 上, 2: 右, 3: 下, 4: 左
-  const direction = ref(0);
-  let xDown = null;
-  let yDown = null;
-  //触摸开始
-  function handleTouchStart(evt) {
-    const firstTouch = (evt.touches && evt.touches[0]) || evt;
-    xDown = firstTouch.clientX;
-    yDown = firstTouch.clientY;
-  }
-  //触摸停止
-  function handleTouchStop() {
-    xDown = yDown = null;
-    direction.value = 0;
-  }
-  //触摸移动
-  function handleTouchMove(evt) {
-    if (!xDown || !yDown) return;
-    const currentTouch = (evt.touches && evt.touches[0]) || evt;
-    const xUp = currentTouch.clientX;
-    const yUp = currentTouch.clientY;
-    const xDiff = xDown - xUp;
-    const yDiff = yDown - yUp;
-    //限定触摸方向数值
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-      if (Math.abs(xDiff) < safeOffset) return;
-      direction.value = xDiff > 0 ? 4 : 2;
-    } else {
-      if (Math.abs(yDiff) < safeOffset) return;
-      direction.value = yDiff > 0 ? 1 : 3;
-    }
-  }
-  //初始化 添加触摸监听事件
-  function init() {
-    const target = document.querySelector(selector);
-    target.addEventListener('touchstart', handleTouchStart, false);
-    target.addEventListener('touchmove', handleTouchMove, false);
-    target.addEventListener('touchend', handleTouchStop, false);
-    target.addEventListener('mousedown', handleTouchStart, false);
-    target.addEventListener('mousemove', handleTouchMove, false);
-    target.addEventListener('mouseup', handleTouchStop, false);
-    target.addEventListener('mouseleave', handleTouchStop, false);
-  }
-  //移除监听事件
-  function destroy() {
-    const target = document.querySelector(selector);
-    target.removeEventListener('touchstart', handleTouchStart);
-    target.removeEventListener('touchmove', handleTouchMove);
-    target.removeEventListener('touchend', handleTouchStop);
-    target.removeEventListener('mousedown', handleTouchStart);
-    target.removeEventListener('mousemove', handleTouchMove);
-    target.removeEventListener('mouseup', handleTouchStop);
-  }
-  onMounted(() => {
-    //初始化
-    init();
-  })
-  return [direction, destroy];
-}
-</script>
-
 <script>
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
 export default {
-  name: 'game2048',
+  data() {
+    return {
+      size: 4,
+      score: 0,
+      list: [],
+      intiNum: [2, 4],
+      pr: 0.9,
+      over: false,
+      direction: [{
+        x: 0,
+        y: -1
+      }, {
+        x: 0,
+        y: 1
+      }, {
+        x: -1,
+        y: 0
+      }, {
+        x: 1,
+        y: 0
+      }]
+    }
+  },
   mounted() {
+    //初始化数组
+    this.init()
+  },
+  methods: {
+    init() {
+      this.newGame()
+      document.addEventListener('keyup', this.keyDown)
+    },
+    newGame() {
+      this.score = 0
+      this.over = false
+      this.list = Array.from(Array(this.size)).map(() => Array(this.size).fill(undefined))
+      this.setRandom()
+    },
+    //插入新格子
+    setRandom() {
+      if (this.hasAvailableCells()) {
+        let [x, y] = this.randomAvailableCells()
+        this.list[x][y] = this.randomValue()
+      }
+    },
+    //获取数值
+    randomValue() {
+      return Math.random() < this.pr ? this.intiNum[0] : this.intiNum[1]
+    },
+    //获取随机一个空格子坐标
+    randomAvailableCells() {
+      let cells = this.availableCells()
+      if (cells.length) {
+        return cells[Math.floor(Math.random() * cells.length)]
+      }
+    },
+    //所有空格子的坐标
+    availableCells() {
+      let cells = []
+      for (let i = 0; i < this.size; i++) {
+        for (let j = 0; j < this.size; j++) {
+          if (!this.list[i][j]) {
+            cells.push([i, j])
+          }
+        }
+      }
+      return cells
+    },
+    //是否存在空格子
+    hasAvailableCells() {
+      return !!this.availableCells().length
+    },
+    hasMergedCells() {
+      for (let i = 0; i < this.size; i++) {
+        for (let j = 0; j < this.size; j++) {
+          let cell = this.list[i][j]
+          if (cell) {
+            for (let dir = 0; dir < 4; dir++) {
+              let vector = this.direction[dir]
+              if (this.withinBounds(i + vector.x, j + vector.y)) {
+                let other = this.list[i + vector.x][j + vector.y]
+                if (other && other === cell) {
+                  return true
+                }
+              }
+            }
+          }
+        }
+      }
+      return false
+    },
+    withinBounds(x, y) {
+      return x > 0 && y > 0 && x < this.size && y < this.size
+    },
+    isAvailable() {
+      return this.hasAvailableCells() || this.hasMergedCells()
+    },
+    //获取0-n的随机数
+    randomNum(index) {
+      return Math.floor(Math.random() * index)
+    },
+    //键盘监听事件
+    keyDown(e) {
+      let arr = null
+      switch (e.keyCode) {
+        case 38: //上
+          this.move(1)
+          break
+        case 40: //下
+          this.move(3)
+          break
+        case 37: //左
+          this.move(0)
+          break
+        case 39: //右
+          this.move(2)
+          break
+      }
+      this.setRandom()
+    },
+    //移动算法，i表示旋转次数
+    move(i) {
+      let arr = this.rotate(Array.from(this.list), i).map((item, index) => {
+        return this.moveLeft(item)
+      })
+      this.list = this.rotate(arr, this.size - i)
+      this.setLocalstorage()
+      if (!this.isAvailable()) {
+        this.over = true
+      }
+    },
+    //单行左移
+    moveLeft(list) {
+      let _list = [] //当前行非空格子
+      let flg = false
+      for (let i = 0; i < this.size; i++) {
+        if (list[i]) {
+          _list.push({
+            x: i,
+            merged: false,
+            value: list[i]
+          })
+        }
+      }
+      _list.forEach(item => {
+        let farthest = this.farthestPosition(list, item)
+        let next = list[farthest - 1]
+        if (next && next === item.value && !_list[farthest - 1].merged) {
+          //合并
+          list[farthest - 1] = next * 2
+          list[item.x] = undefined
+          item = {
+            x: farthest - 1,
+            merged: true,
+            value: next * 2
+          }
+          this.score += next * 2
+        } else {
+          if (farthest != item.x) {
+            list[farthest] = item.value
+            list[item.x] = undefined
+            item.x = farthest
+          }
+        }
+      })
+      return list
+    },
+    //逆时针旋转
+    rotate(arr, n) {
+      n = n % 4
+      if (n === 0) return arr
+      let tmp = Array.from(Array(this.size)).map(() => Array(this.size).fill(undefined))
+      for (let i = 0; i < this.size; i++) {
+        for (let j = 0; j < this.size; j++) {
+          tmp[this.size - 1 - i][j] = arr[j][i]
+        }
+      }
+      if (n > 1) tmp = this.rotate(tmp, n - 1)
+      return tmp
+    },
+    //左边最远空格的x位置
+    farthestPosition(list, cell) {
+      let farthest = cell.x
+      while (farthest > 0 && !list[farthest - 1]) {
+        farthest = farthest - 1
+      }
+      return farthest
+    }
   }
 }
+
 </script>
 
-<style lang="scss">
-@import '@/assets/scss/game2048.scss';
+<style scoped>
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  .header {
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #2C3E50;
+    .title {
+      font-size: 60px;
+    }
+    .score {
+      display: flex;
+      justify-content: space-between;
+      height: 80px;
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-left: 5px;
+        padding-right: 5px;
+        border-radius: 5px;
+        background: #2C3E50;
+        .num {
+          font-size: 25px;
+          font-weight: bold;
+          color: #2C3E50;
+        }
+        &:last-child {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+  .over {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: rgba(238, 228, 218, 0.73);
+    z-index: 1000;
+    border-radius: 5px;
+    text-align: center;
+    color: #ffd04b;
+    p {
+      font-size: 60px;
+      font-weight: bold;
+      height: 60px;
+      line-height: 60px;
+    }
+  }
+  .btn {
+    display: inline-block;
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    color: #ffd04b;
+    background: #2C3E50;
+    &.btn-mg {
+      margin-bottom: 10px;
+    }
+  }
+  .box {
+    width: 400px;
+    height: 400px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background: #2C3E50;
+    .row {
+      width: 100%;
+      height: 23%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .col {
+        width: 23%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        border-radius: 3px;
+        background: #cec1b3;
+        &.n-2 {
+          background: #f8f3e8;
+        }
+        &.n-4 {
+          background: #ede0c8;
+        }
+
+        &.n-8 {
+          background: #f26179;
+        }
+        &.n-16 {
+          background: #f59563;
+        }
+        &.n-32 {
+          background: #f67c5f;
+        }
+        &.n-64 {
+          background: #f65e36;
+        }
+        &.n-128 {
+          background: #edcf72;
+        }
+        &.n-256 {
+          background: #edcc61;
+        }
+        &.n-512 {
+          background: #9c0;
+        }
+        &.n-1024 {
+          background: #3365a5;
+        }
+        &.n-2048 {
+          background: #09c;
+        }
+        &.n-4096 {
+          background: #a6bc;
+        }
+        &.n-8192 {
+          background: #93c;
+        }
+      }
+    }
+  }
+}
+
 </style>

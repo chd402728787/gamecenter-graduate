@@ -7,13 +7,15 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '@/views/UserView/HomeView.vue'
 import RankView from '@/views/UserView/RankView.vue'
-import FindView from '@/views/UserView/FindView.vue'
+import UserSuggestView from '@/views/UserView/UserSuggestView.vue'
 import PersonNalityView from '@/views/UserView/PersonNalityView.vue'
 import GameView from '@/views/UserView/GameView.vue'
 import GameDetailsView from '@/views/UserView/GameDetailsView.vue'
 
 import UserManageView from '@/views/AdminView/UserManageView.vue'
 import GameManageView from '@/views/AdminView/GameManageView.vue'
+import UserSuggestionView from "@/views/AdminView/UserSuggestionView.vue";
+import AboutView from "@/views/AdminView/AboutView.vue";
 
 import UserLoginView from '@/views/UserLoginView.vue'
 import AdminLoginView from '@/views/AdminLoginView.vue'
@@ -35,9 +37,9 @@ const routes: Array<RouteRecordRaw> = [
     component: RankView
   },
   {
-    path: '/user/find',
-    name: 'find',
-    component: FindView
+    path: '/user/suggest',
+    name: 'usersuggest',
+    component: UserSuggestView
   },
   {
     path: '/user/person',
@@ -63,6 +65,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/admin/gamemanage',
     name: 'gamemanage',
     component: GameManageView
+  },
+  {
+    path: '/admin/suggest',
+    name: 'usersuggestion',
+    component: UserSuggestionView
+  },
+  {
+    path: '/admin/about',
+    name: 'about',
+    component: AboutView
   },
   {
     path: '/userlogin',

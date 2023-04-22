@@ -29,17 +29,17 @@
           </el-icon>
           <span>游戏管理</span>
         </el-menu-item>
-        <el-menu-item index="/user/find">
+        <el-menu-item index="/admin/suggest">
           <el-icon>
             <Paperclip />
           </el-icon>
           <span>用户意见</span>
         </el-menu-item>
-        <el-menu-item index="/user/forum">
+        <el-menu-item index="/admin/about">
           <el-icon>
             <ChatLineRound />
           </el-icon>
-          <span>攻略管理</span>
+          <span>关于平台</span>
         </el-menu-item>
       </el-menu>
     </el-col>
@@ -47,22 +47,30 @@
 
 </template>
 
-<script lang="ts" setup>
+<script>
 import {
   House,
   Trophy,
   Paperclip,
-  ChatLineRound
+  ChatLineRound, View, Search, Plus
 } from '@element-plus/icons-vue'
-</script>
-
-<script lang="ts">
 export default {
-  name: 'LeftTitle'
+  name: 'LeftTitle',
+  components: {
+    House,
+    Trophy,
+    Paperclip,
+    ChatLineRound, View, Search, Plus},
+  methods:{
+    islogin(){
+      if(this.$store.state.logined==false)
+        this.$router.push('/userlogin');
+    }
+  }
 }
 </script>
 
-<style scoped>
+<style>
 .el-menu-item{
   display: flex;
   justify-content: center;

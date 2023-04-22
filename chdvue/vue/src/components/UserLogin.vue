@@ -49,6 +49,7 @@ export default {
           this.$store.state.displayUser=1;
           this.$store.state.logined=true;
           this.$store.state.loginedName = this.form.username;
+          this.$store.state.loginedNickName = res.data[0].nickname;
           if (res.data.length!==0) {
             this.$router.push({
               path: '/',

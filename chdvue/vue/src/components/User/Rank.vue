@@ -59,11 +59,12 @@ export default {
   methods: {
     allnew() {
       this.$http.get('api/game/findAll').then(res => {
+        //console.log(res.data);
         this.newinfo = res.data.sort(function (a,b){
           const x = a.date.replace(/-/g, '').replace(/:/g, '').replace('.', '').replace('T', '').replace('Z', '');
           const y = b.date.replace(/-/g, '').replace(/:/g, '').replace('.', '').replace('T', '').replace('Z', '');
-          return x - y;
-        });
+          return y - x;
+        })
       }).catch(err => {
         console.log('获取数据失败' + err);
       })

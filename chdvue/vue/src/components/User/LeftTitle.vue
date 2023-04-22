@@ -22,19 +22,19 @@
           </el-icon>
           <span>主页</span>
         </el-menu-item>
-        <el-menu-item index="/user/rank">
+        <el-menu-item index="/user/rank" @click="islogin">
           <el-icon>
             <Trophy />
           </el-icon>
           <span>排行榜</span>
         </el-menu-item>
-        <el-menu-item index="/user/find">
+        <el-menu-item index="/user/suggest" @click="islogin">
           <el-icon>
             <Paperclip />
           </el-icon>
-          <span>发现</span>
+          <span>用户意见</span>
         </el-menu-item>
-        <el-menu-item index="/user/person">
+        <el-menu-item index="/user/person" @click="islogin">
           <el-icon>
             <ChatLineRound />
           </el-icon>
@@ -46,18 +46,35 @@
 
 </template>
 
-<script lang="ts" setup>
+<script>
 import {
   House,
   Trophy,
   Paperclip,
-  ChatLineRound
+  ChatLineRound, View, Search, Plus
 } from '@element-plus/icons-vue'
-</script>
-
-<script lang="ts">
+import {ElMessage} from "element-plus";
 export default {
-  name: 'LeftTitle'
+  name: 'LeftTitle',
+  components: {
+    House,
+    Trophy,
+    Paperclip,
+    ChatLineRound, View, Search, Plus
+  },
+  methods: {
+    islogin() {
+      if (this.$store.state.logined == false){
+        this.$router.push('/userlogin');
+        ElMessage({
+          message:("请先登录！"),
+          showClose:true,
+          type:"warning"
+        });
+      }
+
+    }
+  }
 }
 </script>
 

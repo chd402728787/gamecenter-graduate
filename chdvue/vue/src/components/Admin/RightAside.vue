@@ -6,31 +6,34 @@
 -->
 <template>
   <div class="block">
-    <router-link v-show="gotopage" to="/userlogin" @click="touserlogin">
+    <router-link to="/userlogin" @click="touserlogin">
     <el-avatar class="avatar-user" :size="50" :src="circleUrl"/>
     </router-link>
   </div>
 </template>
 <script>
 import { reactive, toRefs } from 'vue'
+import {ElMessage} from "element-plus";
 export default {
   name: 'RightAside',
   data(){
     return{
-      gotopage:true
     }
 },
   methods:{
     touserlogin(){
       if(this.$store.state.logined){
-        console.log("已登录");
-        this.gotopage=false;
+        ElMessage({
+          message:"管理员已登录",
+          type:"success",
+          showClose:true
+        });
+        this.$router.push('/admin/usermanage');
+        this.$store.state.logined=true;
       }
       else{
         this.$router.push('/userlogin');
-        this.gotopage=false;
       }
-
     }
   },
   setup() {

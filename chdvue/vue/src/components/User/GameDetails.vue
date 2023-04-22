@@ -140,8 +140,8 @@ export default {
       this.$refs.gamedetailtext1.innerHTML = this.gameinfo[this.gameid - 1].introduction// 游戏介绍
       //console.log(this.gameinfo)
       if (this.gameinfo[this.gameid - 1].gamelink) {
- this.$refs.gamestart.$el.addEventListener('click', () => {
-        window.location.href = this.gameinfo[this.gameid - 1].gamelink
+        this.$refs.gamestart.$el.addEventListener('click', () => {
+          window.location.href = this.gameinfo[this.gameid - 1].gamelink
       })
 }// if 转移到外部网站
     }).catch(err => {

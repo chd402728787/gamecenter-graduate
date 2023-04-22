@@ -19,11 +19,9 @@
     </el-form>
     <!--列表-->
     <el-table :data="game" size="small" highlight-current-row border element-loading-text="拼命加载中" style="width: 100%;">
-      <el-table-column align="center" type="selection" width="60">
+      <el-table-column sortable prop="id" label="序号" width="50">
       </el-table-column>
-      <el-table-column sortable prop="id" label="序号" width="100">
-      </el-table-column>
-      <el-table-column sortable prop="gname" label="游戏名" width="200">
+      <el-table-column sortable prop="gname" label="游戏名" width="100">
       </el-table-column>
       <el-table-column sortable prop="img" label="图片" width="200">
         <template v-slot = "scope">
@@ -32,7 +30,7 @@
       </el-table-column>
       <el-table-column sortable prop="introduction" label="简介" width="300">
       </el-table-column>
-      <el-table-column sortable prop="gamelink" label="游戏链接" width="150">
+      <el-table-column sortable prop="gamelink" label="游戏链接" width="200">
       </el-table-column>
       <el-table-column align="center" label="操作" min-width="200">
         <template v-slot="scope">
@@ -43,17 +41,17 @@
     </el-table>
     <!-- 编辑界面 -->
     <el-dialog v-model="addMD" width="30%" >
-      <el-form label-width="120px" ref="editForm">
-        <el-form-item label="游戏名" prop="gname">
+      <el-form label-width="120px" ref="editForm" label-position="right">
+        <el-form-item label="游戏名:" prop="gname">
           <el-input size="small" v-model="editForm.gname" placeholder="请输入游戏名"></el-input>
         </el-form-item>
-        <el-form-item label="介绍" prop="introduction">
+        <el-form-item label="介绍:" prop="introduction">
           <el-input size="small" v-model="editForm.introduction" placeholder="请输入游戏介绍"></el-input>
         </el-form-item>
-        <el-form-item label="图片" prop="img">
+        <el-form-item label="图片:" prop="img">
           <el-input size="small" v-model="editForm.img" placeholder="请输入图片URL"></el-input>
         </el-form-item>
-        <el-form-item label="链接" prop="gamelink">
+        <el-form-item label="链接:" prop="gamelink">
           <el-input size="small" v-model="editForm.gamelink" placeholder="请输入游戏链接"></el-input>
         </el-form-item>
       </el-form>
@@ -64,17 +62,17 @@
     </el-dialog>
     <!-- 编辑界面 -->
     <el-dialog v-model="updateMD" width="30%" >
-      <el-form label-width="120px" ref="updateForm">
-        <el-form-item label="游戏名" prop="gname">
+      <el-form label-width="120px" ref="updateForm" label-position="right">
+        <el-form-item label="游戏名:" prop="gname">
           <el-input size="small" v-model="updateForm.gname" placeholder="请输入游戏名"></el-input>
         </el-form-item>
-        <el-form-item label="介绍" prop="introduction">
+        <el-form-item label="介绍:" prop="introduction">
           <el-input size="small" v-model="updateForm.introduction" placeholder="请输入游戏介绍"></el-input>
         </el-form-item>
-        <el-form-item label="图片" prop="img">
+        <el-form-item label="图片:" prop="img">
           <el-input size="small" v-model="updateForm.img" placeholder="请输入图片"></el-input>
         </el-form-item>
-        <el-form-item label="链接" prop="gamelink">
+        <el-form-item label="链接:" prop="gamelink">
           <el-input size="small" v-model="updateForm.gamelink" placeholder="请输入游戏链接"></el-input>
         </el-form-item>
       </el-form>
